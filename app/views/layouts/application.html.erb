@@ -10,6 +10,70 @@
   </head>
 
   <body>
+    <!-- deviseのエラーメッセージの表示領域 -->
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <!-- ヘッダー -->
+    <header>
+      <nav class="products_index_header clearfix">
+        <%= link_to place_talks_path do %>
+          <div class="products_index_header_title">
+            <img src='/assets/logo.png'class="products_index_header_logo">
+          </div>
+        <% end %>
+            <!-- 検索機能-->
+        <div>
+          検索機能予定
+        </div>
+            <!-- あとで記載予定！！ -->
+
+        <ul class="products_index_header_itembox">
+            <!-- ここはログイン時のみ -->
+          <% if user_signed_in? %>
+            <li class="products_index_header_item">
+              <%= link_to current_user.username, user_path(current_user.id), { :class => "products_index_header_font" }  %>
+            </li>
+            <!-- ここから管理者ログイン時のみリンク表示 -->
+            <% if current_user.try(:admin?) %>
+            <li class="products_index_header_item">
+              <div>
+              <%= link_to "管理ページ", "/admin", { :class => "products_index_header_font" } %>
+              </div>
+            </li>
+            <% end %>
+             <!-- ここまで管理者ログイン時のみリンク表示 -->
+            <li class="products_index_header_item">
+              <%= link_to "ログアウト", destroy_user_session_path, :style=>"color: #222222; text-decoration:none; font-size:14px", method: :delete  %>
+            </li>
+            <!-- ここ以下がログアウト時のみ -->
+          <% else %>
+            <li class="products_index_header_item">
+              <%= link_to "新規登録", new_user_registration_path,:style=>"color: #222222; text-decoration:none; font-size:14px" %>
+            </li>
+            <li class="products_index_header_item">
+              <%= link_to " ログイン", new_user_session_path,:style=>"color: #222222; text-decoration:none; font-size:14px" %>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    </header>
     <%= yield %>
   </body>
+  <!-- ここからフッター -->
+    <footer>
+      <nav class="products_index_footer">
+        <ul class="products_index_footer_itembox clearfix">
+            <li class="products_index_footer_item">
+              <%= link_to "お問い合わせ", new_mail_path,:style=>"color:white; text-decoration:none;" %>
+            </li>
+            <li class="products_index_footer_item">
+              <%= link_to "このサイトについて", homes_about_path,:style=>"color:white; text-decoration:none;" %>
+            </li>
+            <li>
+              <span class="products_index_footer_c">©︎kusano</span>
+            </li>
+          </ul>
+      </nav>
+    </footer>
 </html>

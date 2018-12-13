@@ -1,0 +1,2 @@
+module PlaceTalkCommentsHelper
+end

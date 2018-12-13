@@ -1,0 +1,2 @@
+module UserTalksHelper
+end
