@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      content: 作品
+      content_tagmap: タグ（作品）
+      edit_content: 作品編集履歴
+      favorite: お気に入り
+      genre: ジャンル
+      place_talk_comment: 投稿コメント
+      place_talk: 投稿記事
+      room: マイページ
+      tag: タグ（全データ）
+      user_tagmap: タグ（ユーザー）
+      user_talk: マイページチャット
+    attributes:
+      user:
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        remember_me: 次回から自動的にログイン

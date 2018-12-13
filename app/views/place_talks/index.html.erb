@@ -1,0 +1,61 @@
+<h1>New place</h1>
+
+<table>
+    <% @place_talks.each do |pt| %>
+      <tr>
+        <td><%= pt.user.username %>さんが</td>
+        <!-- ここから場所の名前の登録の有無によって分岐 -->
+        <% if pt.place_name == nil %>
+		<td><%= pt.adress %>に</td>
+		<% else %>
+		<td><%= pt.place_name %>に</td>
+		<% end %>
+		<!-- ここまで -->
+        <td><%= pt.content.name %>を登録しました！</td>
+        <td><%= link_to 'Show', place_talks_path(pt) %></td>
+		<% if current_user != nil %>
+		<% if pt.user.id == current_user.id %>
+        <td><%= link_to 'Edit', edit_place_talk_path(pt.id) %></td>
+		<% else %>
+		<% end %>
+		<% else %>
+		<% end %>
+
+      </tr>
+    <% end %>
+</table>
+
+
+
+
+ <%= link_to image_tag('btn.png',:id => "funcBtn"), new_place_talk_path %>
+ <style type="text/css">
+#funcBtn{
+position: fixed; bottom: 20px; right: 20px;
+display: block;
+width: 150px;
+height: 150px;
+border-radius: 50%;
+transition:
+opacity 0.2s ease-out 0s,
+/*opacity 透明度を調整するもの ease-outは高速で動き出し、最後に減速します*/
+bottom 0.2s ease-out 0s,
+/*下に下がる速さ*/
+right 0.2s ease-out 0s,
+/*右に動く速さ*/
+transform 0.2s ease-out 0s;
+/*これがないとゆっくり動かない*/
+}
+#funcBtn.scroll{
+	/*スクロールした時にこのCSSが効く*/
+opacity: 0;
+bottom: -50px;
+right: 0px;
+/*移動方向*/
+/*-webkit-transform: rotate( 45deg );
+-moz-transform: rotate( 45deg );*/
+/*上に習い不要説ある*/
+transform: rotate( 45deg );
+}
+</style>
+
