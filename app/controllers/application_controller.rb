@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
 # deviseのコントローラー使う際はその前にconfigure_permitted_parametersを行う
   before_action :configure_permitted_parameters, if: :devise_controller?
+ 
 
 #deviseのログイン後のリダイレクト先
   def after_sign_in_path_for(resource)

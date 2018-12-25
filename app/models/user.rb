@@ -25,4 +25,5 @@ class User < ApplicationRecord
 	has_many :edit_contents, dependent: :destroy
 	has_many :favorites, dependent: :destroy
 	has_many :place_talk_comments, dependent: :destroy
+	attachment :image
 end

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <title>Canatap</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,12 +11,9 @@
   </head>
 
   <body>
-    <!-- deviseのエラーメッセージの表示領域 -->
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
 
     <!-- ヘッダー -->
-    <header>
+    <header id="head">
       <nav class="products_index_header clearfix">
         <%= link_to place_talks_path do %>
           <div class="products_index_header_title">
@@ -58,10 +56,13 @@
         </ul>
       </nav>
     </header>
-    <%= yield %>
-  </body>
-  <!-- ここからフッター -->
-    <footer>
+    <div class="user_body">
+      <!-- deviseのエラーメッセージの表示領域 -->
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
+        <footer>
       <nav class="products_index_footer">
         <ul class="products_index_footer_itembox clearfix">
             <li class="products_index_footer_item">
@@ -76,4 +77,7 @@
           </ul>
       </nav>
     </footer>
+  </body>
+  <!-- ここからフッター -->
+
 </html>
