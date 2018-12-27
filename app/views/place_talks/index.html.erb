@@ -1,16 +1,14 @@
 <head>
-<meta name="viewport" content="initial-scale=1.0,user-scalable=no">
-<script type="text/javascript" charset="utf-8" src="https://map.yahooapis.jp/js/V1/jsapi?appid=dj00aiZpPUxLVk9XdzYzandraCZzPWNvbnN1bWVyc2VjcmV0Jng9YWU-"></script>
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no">
+  <script type="text/javascript" charset="utf-8" src="https://map.yahooapis.jp/js/V1/jsapi?appid=dj00aiZpPUxLVk9XdzYzandraCZzPWNvbnN1bWVyc2VjcmV0Jng9YWU-"></script>
 </head>
+<br>
+<br>
+<br>
 
 
+<div id="map" style="width:1000px; height:550px"></div>
 
-<div id="map" style="width:500px; height:400px"></div>
-<div class="sub-menu">
-<h3>中心点の緯度経度</h3>
-
-緯度：<input id="lat" type="text" size="25" value="35.665627">  経度：<input id="lng" type="text" size="25" value="139.730738">
-</div>
 
 <style>
 .sub-menu {
@@ -77,7 +75,7 @@ window.onload = function(){
     　　　　alert('通信に失敗しました。');  
     });
   }
-
+// いじりはじめるよ
 
   $(document).on("ajax:success", ".submit", function(e) {
     // $('.comment').html(e.detail[2]["response"]);
@@ -92,7 +90,7 @@ window.onload = function(){
       //markerにクリックイベントをつける（bindする）
       marker.bind('click', markerClicked);
       console.log(locations[i]);
-      marker.bindInfoWindow(locations[i].comment);
+      marker.bindInfoWindow('コメント' + locations[i].comment + 'hello');
       ymap.addFeature(marker);
       //formの中を空にする
       // console.log("=============")
@@ -134,7 +132,9 @@ window.onload = function(){
   } );
 };
 }
-
+$(window).on('load',function(){
+    $('#myModal').modal('show');
+});
 </script>
 <!-- ここから追加フォームー -->
 <div id="location" style="display: none">
@@ -154,8 +154,23 @@ window.onload = function(){
 <% end %>
 </div>
 <!-- ここまで追加フォームー -->
-<%= link_to "地図を表示", place_talks_path,method: :post, remote: true, class:"submit" %>
-<div id="comment"></div>
+<!-- モーダルウィンドウstart -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h1>憧れの世界へ出かけよう。</h1>
+    </div>
+    <div class="modal-content">
+        <div class="map_button" data-dismiss="modal" aria-hidden="true"><span>
+      <%= link_to "地図を表示", place_talks_path,method: :post, remote: true, class:"submit" %></span></div>
+</div>
+
+<div id="comment">
+      </div>
+    </div>
+</div>
+<button type="button" class="btn btn-primary modal_button" data-toggle="modal" data-target="#myModal" style="display: none"></button>
+<!-- モーダルウィンドウfin -->
 
 <h1>New place</h1>
 
@@ -183,43 +198,29 @@ window.onload = function(){
       </tr>
     <% end %>
 </table>
-
-
-
-
- <%= link_to image_tag('btn.png',:id => "funcBtn"), new_place_talk_path %>
- <style type="text/css">
-#funcBtn{
-position: fixed; bottom: 20px; right: 20px;
-display: block;
-width: 150px;
-height: 150px;
-border-radius: 50%;
-transition:
-opacity 0.2s ease-out 0s,
-/*opacity 透明度を調整するもの ease-outは高速で動き出し、最後に減速します*/
-bottom 0.2s ease-out 0s,
-/*下に下がる速さ*/
-right 0.2s ease-out 0s,
-/*右に動く速さ*/
-transform 0.2s ease-out 0s;
-/*これがないとゆっくり動かない*/
+<style>
+/*bootstrapのデフォルト設定をオーバーライト*/
+.modal-content{
+  width: 100px;
+  pointer-events: all;
+  height: 50px;
+  margin-top: 25px;
+  margin-left: 40%;
+  line-height: 45px;
+  background-color: transparent;
+  border:none; 
+  box-shadow:none;
 }
-#funcBtn.scroll{
-	/*スクロールした時にこのCSSが効く*/
-opacity: 0;
-bottom: -50px;
-right: 0px;
-/*移動方向*/
-/*-webkit-transform: rotate( 45deg );
--moz-transform: rotate( 45deg );*/
-/*上に習い不要説ある*/
-transform: rotate( 45deg );
-}
-
-.user_body{
-  background-image: none;
+/*壁紙の明度を下げる*/
+.user_body::before{
+  /* 透過した黒を重ねる */
+  background-color: rgba(0,0,0,0.5);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: ' ';
 }
 </style>
-
 

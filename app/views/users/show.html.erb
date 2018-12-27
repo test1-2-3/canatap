@@ -1,16 +1,17 @@
 
-　　<%= form_for(@user) do |f| %>
-  　<div class="users_edit_errors">
-      <% if @user.errors.any? %>
-        <h3><%= @user.errors.count %>件のエラーがあります</h3>
-        <ul>
-        <% @user.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-        <% end %>
-        </ul>
-      <% end %>
-  　</div>
+<div class="user_syow_head"><div>
 	<div class="cont_principal">
+	    <%= form_for(@user) do |f| %>
+  　    <div class="users_edit_errors">
+         <% if @user.errors.any? %>
+         <h3><%= @user.errors.count %>件のエラーがあります</h3>
+         <ul>
+         <% @user.errors.full_messages.each do |message| %>
+           <li><%= message %></li>
+         <% end %>
+         </ul>
+         <% end %>
+  　    </div>
 	<div class="cont_central">
 	  <div class="cont_modal">
 	  <div class="cont_photo">
@@ -27,7 +28,7 @@
 
 	<div class="cont_detalles">
 	    <h3><%= @user.username %></h3>
-	<p>ここに一言</p>
+	<p><%= @user.users_comment %></p>
 	    </div>
 	    </div>
 	<div class="cont_text_ingredients clearfix">
@@ -35,26 +36,32 @@
 
 	    <div class="cont_tabs">
 	    <ul id="tab">
-	          <li><a id="section" class="current"><i class="fas fa-comments"> profile</i></a></li>
-	          <li class="pro_button1"><a href="#section1"><i class="fas fa-history"> 投稿履歴</i></a></li>
-	          <li class="pro_button2"><a href="#section"><i class="fab fa-gratipay"> お気に入り</i></a></li>
-	          <li class="pro_button3"><a id="section3"><i class="fas fa-tags"> タグ</i></a></li>
-	          <li class="pro_button"><a id="section4"><i class="fas fa-comments"> まだ</i></a></li>
+	          <li class="pro_button0"><a href="#" class="aa current"><i class="fas fa-comments"> profile</i></a></li>
+	          <li class="pro_button1"><a href="#" class="aa"><i class="fas fa-history"> 投稿履歴</i></a></li>
+	          <li class="pro_button2"><a href="#" class="aa"><i class="fab fa-gratipay"> お気に入り</i></a></li>
+	          <li class="pro_button3"><a href="#" class="aa"><i class="fas fa-tags"> タグ</i></a></li>
+	          <li class="pro_button4"><a href="#" class="aa"><i class="fas fa-comments"> まだ</i></a></li>
 	    </ul>
-	  </div>
+	    </div>
+	    <div class="area">
 
-			<div id="#section1" class=" litle_menu1">
+			<div id="section0" class="bb litle_menu0">
 			    <p>profile1</p>
 			      	<%= @user.profile %>
 			</div>
-			<div id="#section1" class=" litle_menu2">
-			    <p>profile2</p>
-			      	<%= @user.profile %>
+			<div id="section1" class="bb litle_menu1">
+			    <p>投稿履歴</p>
+			      <%= render 'tab1', user: @user %>
 			</div>
-			<div id="#section1" class=" litle_menu3">
-			    <p>profile3</p>
-			      	<%= @user.profile %>
+			<div id="section2" class="bb litle_menu2">
+			    <p>お気に入り</p>
+
 			</div>
+			<div id="section2" class="bb litle_menu2">
+			    <p>タグ</p>
+
+			</div>
+		</div>
 
 	  </div>
 
@@ -69,42 +76,52 @@
 </div>
 
 
+<!-- いじりはじめた -->
 
 <script>
-　$(function(){
-	$('.pro_button1').on('click',function(){
-		$('.litle_menu2').fadeOut();	
-		$('.litle_menu3').fadeOut();	
-		$('.litle_menu1').fadeIn();	
-
-})
-	});
-
-　$(function(){
-	$('.pro_button2').on('click',function(){
-		$('.litle_menu1').fadeOut();	
-		$('.litle_menu3').fadeOut();	
-		$('.litle_menu2').fadeIn();	
-})
-	});
-
-　$(function(){
-	$('.pro_button3').on('click',function(){
-		$('.litle_menu1').fadeOut();	
-		$('.litle_menu2').fadeOut();	
-		$('.litle_menu3').fadeIn();	
-})
-	});
 
 
-　$(function(){
-　　$("#tab li a").click(function () {
-　　　$("#tab li a").removeClass("now");
-　　　$(this).addClass("now");
-　　});
-　})
+
 
 $(function(){
+	$(function(){
+ 	$('.pro_button1').on('click',function(){
+ 		$('.litle_menu0').fadeOut();	
+ 		$('.litle_menu2').fadeOut();	
+ 		$('.litle_menu3').fadeOut();	
+ 		$('.litle_menu1').fadeIn();	
+
+ })
+ 	});
+
+ 	$(function(){
+ 	$('.pro_button0').on('click',function(){
+ 		$('.litle_menu1').fadeOut();	
+ 		$('.litle_menu2').fadeOut();	
+ 		$('.litle_menu3').fadeOut();	
+ 		$('.litle_menu0').fadeIn();	
+
+
+ })
+ 	});
+
+ 　$(function(){
+ 	$('.pro_button2').on('click',function(){
+ 		$('.litle_menu0').fadeOut();	
+ 		$('.litle_menu1').fadeOut();	
+ 		$('.litle_menu3').fadeOut();	
+ 		$('.litle_menu2').fadeIn();	
+ })
+ 	});
+
+ 　$(function(){
+ 	$('.pro_button3').on('click',function(){
+ 		$('.litle_menu0').fadeOut();	
+ 		$('.litle_menu1').fadeOut();	
+ 		$('.litle_menu2').fadeOut();	
+ 		$('.litle_menu3').fadeIn();	
+ })
+ 	});
 
 	$(document).on('click', '#botan', function(){
 		if ($('.cont_modal').hasClass('cont_modal_active')) {
@@ -115,18 +132,20 @@ $(function(){
 	})
 
 })
-// タブ切り替え部分
-$(document).on('click', '.section', function(){
-		if ($(this).hasClass('current')) {
-			$(this).removeClass('current');
-		} else {
-			$(this).addClass('current');
-		}
-	})
+
 </script>
 
 
 <style>
+.litle_menu{
+	display: none;
+}
+.user_syow_head{
+	margin-top: 70px;
+	background: rgba(212,206,191,1);
+}
+
+
 * {
   margin: 0px auto;
   padding: 0px;
@@ -159,7 +178,7 @@ background: linear-gradient(135deg,  rgba(251,250,246,1) 9%,rgba(212,206,191,1) 
 .cont_central {  
 position: absolute;
   width: 100%;
-  top: 50%;
+  top: 60%;
   margin-top: -350px;
 }
 
@@ -354,6 +373,7 @@ transition: all 0.2s;
 }
 .now
 {
+	display: block;
   border-top: 7px solid #ED346C;
 text-shadow:2px 2px 3px #ffd5d5;
   margin-top: 0px;

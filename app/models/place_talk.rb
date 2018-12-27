@@ -4,6 +4,7 @@ class PlaceTalk < ApplicationRecord
 
 	has_many :place_talk_comments,dependent: :destroy
 	has_many :favorites,dependent: :destroy
+	has_one :locations,dependent: :destroy
 	attachment :image
 
     def favorited_by?(user)

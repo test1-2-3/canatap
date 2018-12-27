@@ -2,7 +2,6 @@ class PlaceTalksController < ApplicationController
    protect_from_forgery except: :search
   def index
     @place_talks = PlaceTalk.all.order(created_at: "DESC")
-    @users = User.all
   end
 
   def show
@@ -25,7 +24,7 @@ class PlaceTalksController < ApplicationController
     @place_talk = PlaceTalk.find(params[:id])
   end
 
-  def click
+  def detail
     lat = params["location"].split(",")[0].to_f
     lon = params["location"].split(",")[1].to_f
     location = Location.where(latitude: lat).where(longitude: lon)[0]

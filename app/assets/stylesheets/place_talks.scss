@@ -11,3 +11,78 @@
 	text-align: left;
 	width: 250px;
 }
+
+#map{
+	margin: 10px auto;
+}
+
+.modal-dialog{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  margin: auto;
+  pointer-events: none;
+}
+
+
+
+
+
+.modal-header h1{
+	color: #fff;
+	text-align: center;
+}
+
+
+
+.map_button {
+  width: 90px;
+}
+.modal-content a {
+  display: block;
+  position: relative;
+  top: 3px;
+  border-radius: 32px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  background: #0a6360;
+}
+.map_button :after {
+  content: "地図を表示";
+  position: absolute;
+  top: -3px;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  background: #01DFD7;
+  border-radius: 32px;
+  transition: .2s;
+  transform: translate3d(0,0,0);
+}
+.map_button span {
+  display: block;
+  position: relative;
+  top: -3px;
+  z-index: 2;
+  font-family: sans-serif;
+  transition: .2s;
+}
+.map_button span:after {
+  content: "";
+}
+
+.map_button a:hover {
+  top: 3px;
+}
+.map_button a:hover:after {
+  top: 0;
+  background: #01DFD7;
+}
+.map_button a:hover span {
+  top: 0;
+}
+.map_button a:hover span:after {
+  right: 27px;
+}

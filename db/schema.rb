@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_23_065030) do
+ActiveRecord::Schema.define(version: 2018_12_26_075954) do
 
   create_table "content_tagmaps", force: :cascade do |t|
     t.integer "tag_id"
@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 2018_12_23_065030) do
     t.boolean "admin", default: false
     t.text "profile"
     t.text "image_id"
+    t.string "users_comment"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

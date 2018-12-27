@@ -23,6 +23,11 @@
   clear: both;
 }
 
+
+.litle_menu1,.litle_menu2,.litle_menu3{
+   display: none;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -37,7 +42,11 @@ header {
 footer {
 	background-color: #212121;
 	width: 100%;
-	height: 100px;
+	z-index: 9999;
+	position: fixed;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
 }
 
 
@@ -481,7 +490,7 @@ footer {
 }
 
 .user_body {
-/*   background-image: url(/assets/map.jpg);*/
+   background-image: url(/assets/map.jpg);
    background-position: center;
    background-size: cover;
    background-repeat: no-repeat;

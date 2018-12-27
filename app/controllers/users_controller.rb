@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
   private
 	def user_params
-	  params.require(:user).permit(:name,:password,:password_confirmation,:profile,:image)
+	  params.require(:user).permit(:name,:password,:password_confirmation,:profile,:image,:users_comment)
 	end
     def room_user
       if Room.where(user_id: params[:id]).exists?
