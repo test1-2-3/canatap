@@ -1,3 +1,91 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/*はじめるよ*/
+
+/*プロフィールカード*/
+
+.panel{
+	width: 75%;
+	margin:60px 0;
+}
+
+.user_profile{
+	margin:20px 0;
+}
+
+.user_img{
+	margin:0 auto;
+}
+
+.social-btn-holder{
+  padding:10px;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+.social-btn-holder .btn-social{
+  font-size:12px;
+  font-weight:bold;
+}
+
+.btn-social{
+  color: white;
+  opacity:0.9;
+}
+.btn-social:hover {
+  color: white;
+  opacity:1;
+}
+.btn-facebook {
+background-color: #3b5998;
+}
+.btn-twitter {
+background-color: #00aced;
+}
+.btn-linkedin {
+background-color:#0e76a8;
+}
+.btn-github{
+  background-color:#000000;
+}
+.btn-google {
+  background-color: #c32f10;
+}
+.btn-stackoverflow{
+  background-color: #D38B28;
+}
+
+.btn-hackerrank{
+  background-color: #27AB5B;
+}
+.btn-soundcloud{
+  background-color: #FF7202;
+}
+.centered-text{
+  text-align: center;
+}
+
+/*編集ページ*/
+.user_edit_font{
+	text-align: center;
+}
+
+.users_edit_submit{
+	margin-bottom: 10px;
+}
+
+.buck{
+	float: right;
+	text-decoration: none;
+	color: black;
+}
+
+.place_image{
+	vertical-align: center;
+}
+/*投稿ページ*/
+.media-heading,.list-inline li {
+	text-align: left;
+}
+

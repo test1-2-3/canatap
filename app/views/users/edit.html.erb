@@ -1,2 +1,76 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+<div class="container">
+    <div class="row user_profile">
+        <div class=" col-lg-offset-3 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <%= form_for(@user) do |f| %>
+          <div class="users_edit_errors">
+          <% if @user.errors.any? %>
+            <h3><%= @user.errors.count %>件のエラーがあります</h3>
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          <% end %>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+                  <div>
+                    <h4 class="user_edit_font">Your Image</h4>
+                    <%= f.attachment_field :image %>
+                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="centered-text col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+                                    <div itemscope="" itemtype="http://schema.org/Person">
+                    <h4>Name</h4>
+                    <%= f.text_field :username,class: "users_edit_account_edit"%>
+                                        <p itemprop="jobTitle"><%= @user.profile %></p>
+                                      <p><span itemprop="affiliation">
+                    <h4>Password</h4>
+                    <%= f.password_field :password ,placeholder:"6文字以上",class: "users_edit_account_edit"%></span></p>
+                    <h4>Password（確認用）</h4>
+                    <%= f.password_field :password_confirmation ,placeholder:"6文字以上",class: "users_edit_account_edit"%>
+                                        <p><span itemprop="affiliation">
+                                        <h4>Profile</h4>
+                    <%= f.text_area :profile, :size => "21x8" %></span></p>
+                    <p><span itemprop="affiliation">
+                                        <h4>Comment</h4>
+                    <%= f.text_area :users_comment %></span></p>
+                                        <div>
+                    <%= f.submit '保存', class: "users_edit_submit" %>
+                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     <% end %>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div id="social-links" class=" col-lg-12">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-3 col-md-2 col-lg-3 social-btn-holder">
+                                  <!-- ここにタグいれる予定 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%=link_to "Back", user_path(@user), class: 'buck' %>
+            </div>
+        </div>
+    </div>
+</div>
+<br>

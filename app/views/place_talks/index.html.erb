@@ -1,3 +1,181 @@
+<head>
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no">
+  <script type="text/javascript" charset="utf-8" src="https://map.yahooapis.jp/js/V1/jsapi?appid=dj00aiZpPUxLVk9XdzYzandraCZzPWNvbnN1bWVyc2VjcmV0Jng9YWU-"></script>
+</head>
+<br>
+<br>
+<br>
+
+
+<div id="map" style="width:1000px; height:550px"></div>
+
+<script type="text/javascript">
+//mapを新しく作成
+window.onload = function(){
+    var ymap = new Y.Map("map", {
+        configure : {
+            doubleClickZoom : true,//ダブルクリックでズーム
+            scrollWheelZoom : true,
+            singleClickPan : true,
+            dragging : true,
+            continuousZoom : true
+        }
+    });
+
+    ymap.drawMap(new Y.LatLng(35.66572, 139.73100), 17, Y.LayerSetId.NORMAL);//地図を表示
+
+    var control = new Y.SearchControl();//検索フォームを追加
+    ymap.addControl(control);
+
+    var control = new Y.SliderZoomControlVertical();//ズームスライドバーを追加
+    ymap.addControl(control);
+
+    ymap.bind("moveend", function(){onMoved();});//地図移動した時に、移動後の中心地の緯度経度をとってる
+    function onMoved(){
+        latlng = ymap.getCenter();
+        document.getElementById("lat").value = latlng.lat();
+        document.getElementById("lng").value = latlng.lng();
+  }
+
+  //マーカーをクリックしたら呼び出される
+  var markerClicked = function(){
+    // console.log("========")
+      // var ll = this.getLatLng();
+      // alert(ll.toString());
+       $.ajax({
+          type:'POST', // リクエストのタイプはGETです
+          url: '/search', // URLは/mealsを指定します。つまりmeals#indexのアクションをリクエストします
+          data: {location: this.getLatLng().toString()}, // コントローラへフォームの値を送信します
+          dataType: 'json' // データの型はjsonで指定します
+        }).done(function (data){
+            // lat = data.location.latitude
+            // lon = data.location.longitude
+            // marker = new Y.Marker(new Y.LatLng(lat,lon));
+            // marker.bindInfoWindow('aaaa');
+            // ymap.addFeature(marker);
+            comment = data.location.comment
+            // $("#comment").text(comment)
+             // console.log(comment)
+        }).fail(function (data) {
+           //通信失敗
+    　　　　alert('通信に失敗しました。');  
+    });
+  }
+
+  $(document).on("ajax:success", ".submit", function(e) {
+    // $('.comment').html(e.detail[2]["response"]);
+    // console.log(e)
+    let response = e.detail[2]["response"]
+    // console.log(response)
+    let locations = JSON.parse(response).location
+    for (var i = 0; i < locations.length; i++) {
+      let lat = Number(locations[i].latitude)
+      let lon = Number(locations[i].longitude)
+      var marker = new Y.Marker(new Y.LatLng(lat,lon));
+      //markerにクリックイベントをつける（bindする）
+      marker.bind('click', markerClicked);
+      console.log(locations[i]);
+      marker.bindInfoWindow(
+        '<h5>作品名</h5>' 
+        + locations[i].comment 
+        + '<br><h5>投稿写真</h5>'
+        + locations[i].comment
+        + '<br><h5>コメント</h5><span></span>'
+        + locations[i].comment
+        );
+      ymap.addFeature(marker);
+      //formの中を空にする
+      // console.log("=============")
+      $(".users_edit_account_edit").val("");
+    }
+
+    // console.log(e.detail[2]["response"])
+  })
+     // 地図をｸﾘｯｸしたのときマーカーを作成
+    Y.Event.addListener(ymap, 'click', clickMap);
+        function clickMap(latlng){
+          // let mylating = new Y.LatLng (35.664551986452906,139.73157935714718)
+          // console.log(mylating);
+
+          // ymap.addFeature(new Y.Marker(mylating));
+          $('#location').css('display', 'block')//下のフォームを表示
+            var location = latlng
+            // console.log(location);
+
+          $('#longitude').val(location.Lon);
+           console.log(location.Lat);
+          $('#latitude').val(location.Lat);
+           //onsole.log(location.Lon);
+
+           var latlng = new Y.LatLng(location.Lat, location.Lon);
+           var request = { "latlng": latlng };
+
+           var geocoder = new Y.GeoCoder();//Yahooのジオコーダー
+           geocoder.execute(request , function( ydf ) {
+              if ( ydf.features.length > 0 ) {
+                var feature = ydf.features[0];
+                // console.log(feature);
+                // alert(feature.property.Address);
+                // console.log(feature);
+
+                  $('#adress').val(feature.property.Address);
+                  $('#prefecture').val(feature.property.AddressElement[0]);
+                  // console.log(feature.property.AddressElement[0]);
+            }
+  } );
+};
+}
+//モーダルウィンドウ読み込み 
+$(window).on('load',function(){
+    $('#myModal').modal('show');
+});
+</script>
+<!-- ここから追加フォームー -->
+<div id="location" style="display: none">
+  <div class="row row-center">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5"></div>
+      <div class="col-lg-10 col-md-9 col-sm-8 col-xs-7">
+        <div class="popover right show"style="position:relative; top=-90px; left=100px; max-width:100%; display:inline;">
+          <div class="arrow"></div>
+          <div class="popover-content">
+            <p id="notice"><%= notice %></p>
+
+            <%= form_with model: Location.new, url: place_talks_path,method: :post,class:"submit" do |f| %>
+              <h4>Comment</h4>
+              <%= f.text_field :comment,class: "users_edit_account_edit"%>
+              <%= f.hidden_field :longitude, :value => "longitude", :id => "longitude"  -%>
+              <%= f.hidden_field :latitude, :value => "latitude", :id => "latitude" -%>
+              <%= f.hidden_field :prefecture, :value => "prefecture", :id => "prefecture"  -%>
+              <%= f.hidden_field :place_name, :value => "place_name", :id => "place_name"  -%>
+              <%= f.hidden_field :adress, :value => "adress", :id => "adress"  -%>
+              </span></p>
+
+              <%= f.submit "作成"%>
+            <% end %>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<!-- ここまで追加フォームー -->
+<!-- モーダルウィンドウstart -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h1>憧れの世界へ出かけよう。</h1>
+    </div>
+    <div class="modal-content">
+        <div class="map_button" data-dismiss="modal" aria-hidden="true"><span>
+      <%= link_to "地図を表示", place_talks_path,method: :post, remote: true, class:"submit" %></span></div>
+</div>
+
+<div id="comment">
+      </div>
+    </div>
+</div>
+<button type="button" class="btn btn-primary modal_button" data-toggle="modal" data-target="#myModal" style="display: none"></button>
+<!-- モーダルウィンドウfin -->
+
 <h1>New place</h1>
 
 <table>
@@ -24,38 +202,35 @@
       </tr>
     <% end %>
 </table>
-
-
-
-
- <%= link_to image_tag('btn.png',:id => "funcBtn"), new_place_talk_path %>
- <style type="text/css">
-#funcBtn{
-position: fixed; bottom: 20px; right: 20px;
-display: block;
-width: 150px;
-height: 150px;
-border-radius: 50%;
-transition:
-opacity 0.2s ease-out 0s,
-/*opacity 透明度を調整するもの ease-outは高速で動き出し、最後に減速します*/
-bottom 0.2s ease-out 0s,
-/*下に下がる速さ*/
-right 0.2s ease-out 0s,
-/*右に動く速さ*/
-transform 0.2s ease-out 0s;
-/*これがないとゆっくり動かない*/
+<style>
+/*bootstrapのデフォルト設定をオーバーライト*/
+.modal-content{
+  width: 100px;
+  pointer-events: all;
+  height: 50px;
+  margin-top: 25px;
+  margin-left: 40%;
+  line-height: 45px;
+  background-color: transparent;
+  border:none; 
+  box-shadow:none;
 }
-#funcBtn.scroll{
-	/*スクロールした時にこのCSSが効く*/
-opacity: 0;
-bottom: -50px;
-right: 0px;
-/*移動方向*/
-/*-webkit-transform: rotate( 45deg );
--moz-transform: rotate( 45deg );*/
-/*上に習い不要説ある*/
-transform: rotate( 45deg );
+/*壁紙の明度を下げる*/
+.user_body::before{
+  /* 透過した黒を重ねる */
+  background-color: rgba(0,0,0,0.5);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: ' ';
+}
+/*吹き出しの位置調整*/
+.row {
+    position: absolute;
+    top: 350px;
+    left: 700px;
 }
 </style>
 

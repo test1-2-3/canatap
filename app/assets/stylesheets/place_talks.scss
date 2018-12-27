@@ -2,3 +2,110 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.users_edit_account_edit{
+	text-align: center;
+	width: 100px;
+}
+
+.adress{
+	text-align: left;
+	width: 250px;
+}
+
+.edit_form{
+
+}
+
+#map{
+	margin: 10px auto;
+}
+
+.modal-dialog{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
+    margin: auto;
+    pointer-events: none;
+}
+
+.modal-header h1{
+	color: #fff;
+	text-align: center;
+}
+
+.map_button {
+    width: 90px;
+}
+.modal-content a {
+	display: block;
+	position: relative;
+	top: 3px;
+	border-radius: 32px;
+	color: #fff;
+	text-align: center;
+	text-decoration: none;
+	background: #0a6360;
+}
+.map_button :after {
+	content: "地図を表示";
+	position: absolute;
+	top: -3px;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	background: #01DFD7;
+	border-radius: 32px;
+	transition: .2s;
+	transform: translate3d(0,0,0);
+}
+.map_button span {
+  display: block;
+  position: relative;
+  top: -3px;
+  z-index: 2;
+  font-family: sans-serif;
+  transition: .2s;
+}
+.map_button span:after {
+  content: "";
+}
+
+.map_button a:hover {
+  top: 3px;
+}
+.map_button a:hover:after {
+  top: 0;
+  background: #01DFD7;
+}
+.map_button a:hover span {
+  top: 0;
+}
+.map_button a:hover span:after {
+  right: 27px;
+}
+
+/*いじるよ*/
+//吹き出し用の設定
+.popover.show{
+  margin-bottom: 10px;
+}
+//横の画像用の設定
+img.reviews {
+  margin-bottom: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+//並んでいるものを上下中央で揃える設定
+.row-center{
+  text-align: center;
+  letter-spacing: -0.4em;
+}
+.row-center > [class*='col-'] {
+  display: inline-block;
+  letter-spacing: 0;
+  vertical-align: middle;
+  float: none !important;
+}

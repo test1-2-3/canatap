@@ -1,8 +1,13 @@
 class PlaceTalk < ApplicationRecord
 	belongs_to :user
 	belongs_to :content
+
+	has_many :place_talk_comments,dependent: :destroy
+	has_many :favorites,dependent: :destroy
+	has_one :locations,dependent: :destroy
 	attachment :image
 
-	has_many :place_talk_comments
-	has_many :favorites
+    def favorited_by?(user)
+      favorites.where(user_id: user.id).exists?
+    end
 end
