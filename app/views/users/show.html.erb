@@ -3,12 +3,6 @@
 	<div class="cont_principal">
 	    <%= form_for(@user) do |f| %>
   　    <div class="users_edit_errors">
-         <% if @user.errors.any? %>
-         <h3><%= @user.errors.count %>件のエラーがあります</h3>
-         <ul>
-         <% @user.errors.full_messages.each do |message| %>
-           <li><%= message %></li>
-         <% end %>
          </ul>
          <% end %>
   　    </div>
@@ -16,7 +10,7 @@
 	  <div class="cont_modal">
 	  <div class="cont_photo">
 	<div class="cont_img_back">
-    <%= attachment_image_tag @user, :image, format: 'jpeg' ,fallback: 'no_image.jpg' %>
+    <%= attachment_image_tag @user, :image, format: 'jpeg' ,fallback: '/images/no_image.jpg' %>
 	</div>
 	<div class="cont_mins">
 	  <div class="cont_icon_right">
