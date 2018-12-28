@@ -1,36 +1,29 @@
-      <div class="title">REGISTER</div>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
-      <div class="input">
-         <label for="regname">Username</label>
+
+  <div class="field">
+      <%= f.label :ユーザーネーム %><br />
       <%= f.text_field :username ,autofocus: true %>
-         <span class="spin"></span>
-      </div>
-
-      <div class="input">
-         <label for="regpass">E-mail</label>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-         <span class="spin"></span>
-      </div>
+  </div>
 
-      <div class="input">
-         <label for="reregpass">Password</label>
+  <div class="field">
+    <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
-         <span class="spin"></span>
-      </div>
-      <div class="input">
-         <label for="regpass">Repeat Password</label>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-         <span class="spin"></span>
-      </div>
+  </div>
 
-      <div class="button">
-          <div class="actions">
-         <button><%= f.submit "Sign up", :class =>"btn" %></button>
-      </div>
-      <% end %>
-
-</style>
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
