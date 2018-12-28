@@ -5,33 +5,37 @@
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 <div class="container">
   <% @user.place_talks.each do |pt| %>
-  <div class="well">
-      <div class="media">
-      	<a class="pull-left" href="#">
+  	<div class="well">
+    	<div class="media">
+      		<a class="pull-left" href="#">
     		<%= attachment_image_tag pt, :image,:size => "100x100",fallback: 'no_image.jpg', class: "place_image" %>
-  		</a>
-  		<div class="media-body">
-    		<h4 class="media-heading"><%= pt.place_name %></h4>
-          <p><%= pt.place_talk %></p>
-          <ul class="list-inline list-unstyled">
-  			<li><span><i class="glyphicon glyphicon-calendar"></i> <%= pt.created_at.strftime('%Y/%m/%d') %></span></li>
-            <li>|</li>
-            <span><i class="glyphicon glyphicon-comment"> <%= pt.place_talk_comments.count %>コメント</i></span>
-            <li>|</li>
-            <%= link_to "Show", place_talk_path(pt.id) %>
-            <li>|</li>
-            <% if @user == current_user %>
-            <li>
-				<%= link_to "Edit", edit_place_talk_path(pt.id) %>
-            </li>
-            <li>|</li>
-            <li>
-				<%= link_to "Delete", place_talk_path(pt.id), method: :delete,"data-confirm" => "本当に削除しますか?"  %>
-            </li>
-            <% end %>
-			</ul>
-       </div>
-    </div>
-    <% end %>
-</div>
+  			</a>
+	  		<div class="media-body">
+	    		<h4 class="media-heading"><%= pt.place_name %></h4>
+	        	<p><%= pt.place_talk %></p>
+	        	<ul class="list-inline list-unstyled">
+		  			<li>
+		  				<span><i class="glyphicon glyphicon-calendar"></i> <%= pt.created_at.strftime('%Y/%m/%d') %></span>
+		  			</li>
+		            <li>|</li>
+		            <li>
+		            <span><i class="glyphicon glyphicon-comment"> <%= pt.place_talk_comments.count %>コメント</i></span>
+		        	</li>
+		            <li>|</li>
+		            <%= link_to "Show", place_talk_path(pt.id) %>
+		            <li>|</li>
+		            <% if @user == current_user %>
+		            <li>
+						<%= link_to "Edit", edit_place_talk_path(pt.id) %>
+		            </li>
+		            <li>|</li>
+		            <li>
+						<%= link_to "Delete", place_talk_path(pt.id), method: :delete,"data-confirm" => "本当に削除しますか?"  %>
+		            </li>
+		            <% end %>
+				</ul>
+			</div>
+	    </div>
+	</div>
+	<% end %>
 </div>

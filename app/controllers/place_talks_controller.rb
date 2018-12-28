@@ -1,4 +1,5 @@
 class PlaceTalksController < ApplicationController
+   before_action :authenticate_user! 
    protect_from_forgery except: :search
   def index
     @place_talks = PlaceTalk.all.order(created_at: "DESC")

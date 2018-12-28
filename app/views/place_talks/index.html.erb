@@ -119,7 +119,7 @@ window.onload = function(){
                 // console.log(feature);
 
                   $('#adress').val(feature.property.Address);
-                  $('#prefecture').val(feature.property.AddressElement[0]);
+                  $('#prefecture').val(feature.property.AddressElement[0].Name);
                   // console.log(feature.property.AddressElement[0]);
             }
   } );
