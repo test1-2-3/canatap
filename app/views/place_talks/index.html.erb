@@ -116,7 +116,7 @@ window.onload = function(){
                 var feature = ydf.features[0];
                 console.log(feature);
                 // alert(feature.property.Address);
-                // console.log(feature);
+                console.log(feature);
 
                   $('#adress').val(feature.property.Address);
                   $('#prefecture').val(feature.property.AddressElement[0]);
@@ -130,6 +130,7 @@ $(window).on('load',function(){
     $('#myModal').modal('show');
 });
 </script>
+<!-- はじめるよ -->
 <!-- ここから追加フォームー -->
 <div id="location" style="display: none">
   <div class="row row-center">
@@ -176,32 +177,7 @@ $(window).on('load',function(){
 <button type="button" class="btn btn-primary modal_button" data-toggle="modal" data-target="#myModal" style="display: none"></button>
 <!-- モーダルウィンドウfin -->
 
-<h1>New place</h1>
 
-<table>
-    <% @place_talks.each do |pt| %>
-      <tr>
-        <td><%= pt.user.username %>さんが</td>
-        <!-- ここから場所の名前の登録の有無によって分岐 -->
-        <% if pt.place_name == nil %>
-		<td><%= pt.adress %>に</td>
-		<% else %>
-		<td><%= pt.place_name %>に</td>
-		<% end %>
-		<!-- ここまで -->
-        <td><%= pt.content.name %>を登録しました！</td>
-        <td><%= link_to 'Show', place_talks_path(pt) %></td>
-		<% if current_user != nil %>
-		<% if pt.user.id == current_user.id %>
-        <td><%= link_to 'Edit', edit_place_talk_path(pt.id) %></td>
-		<% else %>
-		<% end %>
-		<% else %>
-		<% end %>
-
-      </tr>
-    <% end %>
-</table>
 <style>
 /*bootstrapのデフォルト設定をオーバーライト*/
 .modal-content{

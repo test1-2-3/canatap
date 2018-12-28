@@ -54,7 +54,7 @@ class PlaceTalksController < ApplicationController
        render json: {result: "ok", location: @locations}
     end
   end
-
+# いじるよ
   def update
     @place_talk = PlaceTalk.find(params[:id])
     @place_talk.update(place_talk_params)
