@@ -33,8 +33,8 @@ window.onload = function(){
     ymap.bind("moveend", function(){onMoved();});//地図移動した時に、移動後の中心地の緯度経度をとってる
     function onMoved(){
         latlng = ymap.getCenter();
-        document.getElementById("lat").value = latlng.lat();
-        document.getElementById("lng").value = latlng.lng();
+        // document.getElementById("lat").value = latlng.lat();
+        // document.getElementById("lng").value = latlng.lng();
   }
 
   //マーカーをクリックしたら呼び出される
@@ -114,7 +114,7 @@ window.onload = function(){
            geocoder.execute(request , function( ydf ) {
               if ( ydf.features.length > 0 ) {
                 var feature = ydf.features[0];
-                // console.log(feature);
+                console.log(feature);
                 // alert(feature.property.Address);
                 // console.log(feature);
 

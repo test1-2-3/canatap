@@ -1,10 +1,10 @@
 
 <div class="user_syow_head"><div>
 	<div class="cont_principal">
-	    <%= form_for(@user) do |f| %>
+
   　    <div class="users_edit_errors">
-         </ul>
-         <% end %>
+
+
   　    </div>
 	<div class="cont_central">
 	  <div class="cont_modal">
@@ -30,11 +30,10 @@
 
 	    <div class="cont_tabs">
 	    <ul id="tab">
-	          <li class="pro_button0"><a href="#" class="aa current"><i class="fas fa-comments"> profile</i></a></li>
-	          <li class="pro_button1"><a href="#" class="aa"><i class="fas fa-history"> 投稿履歴</i></a></li>
-	          <li class="pro_button2"><a href="#" class="aa"><i class="fab fa-gratipay"> お気に入り</i></a></li>
-	          <li class="pro_button3"><a href="#" class="aa"><i class="fas fa-tags"> タグ</i></a></li>
-	          <li class="pro_button4"><a href="#" class="aa"><i class="fas fa-comments"> まだ</i></a></li>
+	          <li class="pro_button pro_button0" id = 0><a href="#" class="aa current"><i class="fas fa-comments"> profile</i></a></li>
+	          <li class="pro_button pro_button1" id = 1><a href="#" class="aa"><i class="fas fa-history"> 投稿履歴</i></a></li>
+	          <li class="pro_button pro_button2" id = 2><a href="#" class="aa"><i class="fab fa-gratipay"> お気に入り</i></a></li>
+	          <li class="pro_button pro_button3" id = 3><a href="#" class="aa"><i class="fas fa-tags"> タグ</i></a></li>
 	    </ul>
 	    </div>
 	    <div class="area">
@@ -51,7 +50,7 @@
 			    <p>お気に入り</p>
 
 			</div>
-			<div id="section2" class="bb litle_menu2">
+			<div id="section3" class="bb litle_menu3">
 			    <p>タグ</p>
 
 			</div>
@@ -60,7 +59,7 @@
 	  </div>
 
 
-	<% end %>
+
 		    <div id="botan" class="cont_btn_open_dets">
 	      <i class="fas fa-chevron-right"></i>
 	    </div>
@@ -78,44 +77,47 @@
 
 
 $(function(){
-	$(function(){
- 	$('.pro_button1').on('click',function(){
- 		$('.litle_menu0').fadeOut();	
- 		$('.litle_menu2').fadeOut();	
- 		$('.litle_menu3').fadeOut();	
- 		$('.litle_menu1').fadeIn();	
+	$('.pro_button').on('click',function(){
+ 		id = $(this).attr("id");
+ 		class_name = "section" + id;
+ 		$(".bb").fadeOut();
+ 		$(class_name).fadeIn();
+ 	})
+ 	// $('.pro_button1').on('click',function(){
+ 	// 	$('.litle_menu0').fadeOut();
+ 	// 	$('.litle_menu2').fadeOut();
+ 	// 	$('.litle_menu3').fadeOut();
+ 	// 	$('.litle_menu1').fadeIn();
+ 	// })
 
- })
- 	});
-
- 	$(function(){
- 	$('.pro_button0').on('click',function(){
- 		$('.litle_menu1').fadeOut();	
- 		$('.litle_menu2').fadeOut();	
- 		$('.litle_menu3').fadeOut();	
- 		$('.litle_menu0').fadeIn();	
+ // 	$(function(){
+ // 	$('.pro_button0').on('click',function(){
+ // 		$('.litle_menu1').fadeOut();
+ // 		$('.litle_menu2').fadeOut();
+ // 		$('.litle_menu3').fadeOut();
+ // 		$('.litle_menu0').fadeIn();
 
 
- })
- 	});
+ // })
+ // 	});
 
- 　$(function(){
- 	$('.pro_button2').on('click',function(){
- 		$('.litle_menu0').fadeOut();	
- 		$('.litle_menu1').fadeOut();	
- 		$('.litle_menu3').fadeOut();	
- 		$('.litle_menu2').fadeIn();	
- })
- 	});
+ // 　$(function(){
+ // 	$('.pro_button2').on('click',function(){
+ // 		$('.litle_menu0').fadeOut();
+ // 		$('.litle_menu1').fadeOut();
+ // 		$('.litle_menu3').fadeOut();
+ // 		$('.litle_menu2').fadeIn();
+ // })
+ // 	});
 
- 　$(function(){
- 	$('.pro_button3').on('click',function(){
- 		$('.litle_menu0').fadeOut();	
- 		$('.litle_menu1').fadeOut();	
- 		$('.litle_menu2').fadeOut();	
- 		$('.litle_menu3').fadeIn();	
- })
- 	});
+ // 　$(function(){
+ // 	$('.pro_button3').on('click',function(){
+ // 		$('.litle_menu0').fadeOut();
+ // 		$('.litle_menu1').fadeOut();
+ // 		$('.litle_menu2').fadeOut();
+ // 		$('.litle_menu3').fadeIn();
+ // })
+ 	// });
 
 	$(document).on('click', '#botan', function(){
 		if ($('.cont_modal').hasClass('cont_modal_active')) {
