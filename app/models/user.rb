@@ -19,6 +19,7 @@ class User < ApplicationRecord
   end
 
 	has_many :place_talks, dependent: :destroy
+  has_many :locations, dependent: :destroy
 	has_one :rooms, dependent: :destroy
 	has_many :user_talks, dependent: :destroy
 	has_many :user_tagmaps, dependent: :destroy

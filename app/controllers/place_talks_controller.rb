@@ -3,6 +3,7 @@ class PlaceTalksController < ApplicationController
    protect_from_forgery except: :search
   def index
     @place_talks = PlaceTalk.all.order(created_at: "DESC")
+
   end
 
   def show
@@ -42,8 +43,11 @@ class PlaceTalksController < ApplicationController
   def create
     if params[:location] #作成ボタン
       @location = Location.new(location_params)
+      @location.user_id = current_user.id
+      @location.username = current_user.username
         # binding.pry
       if @location.save
+        # binding.pry
         @locations = Location.all
         puts "asss"
         render json: {result: "ok", location: @locations}
@@ -67,6 +71,6 @@ class PlaceTalksController < ApplicationController
 
   private
   def location_params
-      params.require(:location).permit(:adress, :longitude, :latitude,:prefecture,:place_name,:comment,:content_id,)
+      params.require(:location).permit(:adress, :longitude, :latitude,:prefecture,:image,:comment,:content_id,)
   end
 end

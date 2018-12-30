@@ -71,39 +71,41 @@ window.onload = function(){
     for (var i = 0; i < locations.length; i++) {
       let lat = Number(locations[i].latitude)
       let lon = Number(locations[i].longitude)
+      var img_url = locations[i].image_id
       var marker = new Y.Marker(new Y.LatLng(lat,lon));
+      // console.log(locations[i].image_id)
       //markerにクリックイベントをつける（bindする）
+      
       marker.bind('click', markerClicked);
       console.log(locations[i]);
       marker.bindInfoWindow(
-        '<h5>作品名</h5>' 
-        + locations[i].comment 
+        '<h6>投稿者</h6>' 
+        + locations[i].username
         + '<br><h5>投稿写真</h5>'
-        + locations[i].comment
+        // + '<div class="photo"><img class="attachment location image" src="attachments/dd18cc92170d1be3c5186e3252fa4ae503ced378/store/">' + img_url + '/image.jpeg"></div>'
         + '<br><h5>コメント</h5><span></span>'
         + locations[i].comment
         );
+
+      // console.log()
       ymap.addFeature(marker);
       //formの中を空にする
       // console.log("=============")
       $(".users_edit_account_edit").val("");
     }
+          $('.photo').children('img').attr('src', img_url+'/image.jpeg');
 
     // console.log(e.detail[2]["response"])
   })
      // 地図をｸﾘｯｸしたのときマーカーを作成
     Y.Event.addListener(ymap, 'click', clickMap);
         function clickMap(latlng){
-          // let mylating = new Y.LatLng (35.664551986452906,139.73157935714718)
-          // console.log(mylating);
-
-          // ymap.addFeature(new Y.Marker(mylating));
           $('#location').css('display', 'block')//下のフォームを表示
             var location = latlng
             // console.log(location);
 
           $('#longitude').val(location.Lon);
-           console.log(location.Lat);
+           // console.log(location.Lat);
           $('#latitude').val(location.Lat);
            //onsole.log(location.Lon);
 
@@ -114,7 +116,7 @@ window.onload = function(){
            geocoder.execute(request , function( ydf ) {
               if ( ydf.features.length > 0 ) {
                 var feature = ydf.features[0];
-                console.log(feature);
+                // console.log(feature);
                 // alert(feature.property.Address);
                 // console.log(feature);
 
@@ -141,12 +143,12 @@ $(window).on('load',function(){
             <p id="notice"><%= notice %></p>
 
             <%= form_with model: Location.new, url: place_talks_path,method: :post,class:"submit" do |f| %>
-              <h4>Comment</h4>
+              <%= f.attachment_field :image %>
+              <h6>Comment</h6>
               <%= f.text_field :comment,class: "users_edit_account_edit"%>
               <%= f.hidden_field :longitude, :value => "longitude", :id => "longitude"  -%>
               <%= f.hidden_field :latitude, :value => "latitude", :id => "latitude" -%>
               <%= f.hidden_field :prefecture, :value => "prefecture", :id => "prefecture"  -%>
-              <%= f.hidden_field :place_name, :value => "place_name", :id => "place_name"  -%>
               <%= f.hidden_field :adress, :value => "adress", :id => "adress"  -%>
               </span></p>
 
