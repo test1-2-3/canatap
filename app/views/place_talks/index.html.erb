@@ -1,6 +1,7 @@
 <head>
   <meta name="viewport" content="initial-scale=1.0,user-scalable=no">
   <script type="text/javascript" charset="utf-8" src="https://map.yahooapis.jp/js/V1/jsapi?appid=dj00aiZpPUxLVk9XdzYzandraCZzPWNvbnN1bWVyc2VjcmV0Jng9YWU-"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
 </head>
 <br>
 <br>
@@ -24,8 +25,10 @@ window.onload = function(){
 
     ymap.drawMap(new Y.LatLng(35.66572, 139.73100), 17, Y.LayerSetId.NORMAL);//地図を表示
 
-    var control = new Y.SearchControl();//検索フォームを追加
-    ymap.addControl(control);
+    // var control = new Y.SearchControl();//検索フォームを追加
+    // ymap.addControl(control)
+    ymap.addControl(new Y.SearchControl(), new Y.ControlPosition(Y.ControlPosition.BOTTOM_LEFT));
+
 
     var control = new Y.SliderZoomControlVertical();//ズームスライドバーを追加
     ymap.addControl(control);
@@ -58,7 +61,7 @@ window.onload = function(){
              // console.log(comment)
         }).fail(function (data) {
            //通信失敗
-    　　　　alert('通信に失敗しました。');  
+            alert('通信に失敗しました。');  
     });
   }
 
@@ -81,8 +84,8 @@ window.onload = function(){
       marker.bindInfoWindow(
         '<h6>投稿者</h6>' 
         + locations[i].username
-        + '<br><h5>投稿写真</h5>'
-        // + '<div class="photo"><img class="attachment location image" src="attachments/dd18cc92170d1be3c5186e3252fa4ae503ced378/store/">' + img_url + '/image.jpeg"></div>'
+        + '<br><h5>作品名</h5>'
+        + locations[i].comment
         + '<br><h5>コメント</h5><span></span>'
         + locations[i].comment
         );
@@ -91,7 +94,7 @@ window.onload = function(){
       ymap.addFeature(marker);
       //formの中を空にする
       // console.log("=============")
-      $(".users_edit_account_edit").val("");
+      $(".location_comment").val("");
     }
           $('.photo').children('img').attr('src', img_url+'/image.jpeg');
 
@@ -131,6 +134,18 @@ window.onload = function(){
 $(window).on('load',function(){
     $('#myModal').modal('show');
 });
+
+Push.Permission.request();
+Push.create('更新履歴', {
+  body:'<%= render 'push', place_talk: @place_talks %>',
+  icon: '',
+  timeout: 8000, // 通知が消えるタイミング
+  vibrate: [100, 100, 100], // モバイル端末でのバイブレーション秒数
+  onClick: function() {
+  // 通知がクリックされた場合の設定
+  console.log(this);
+  }
+});
 </script>
 <!-- ここから追加フォームー -->
 <div id="location" style="display: none">
@@ -143,13 +158,18 @@ $(window).on('load',function(){
             <p id="notice"><%= notice %></p>
 
             <%= form_with model: Location.new, url: place_talks_path,method: :post,class:"submit" do |f| %>
-              <%= f.attachment_field :image %>
               <h6>Comment</h6>
-              <%= f.text_field :comment,class: "users_edit_account_edit"%>
+              <%= f.text_field :comment,class: "location_comment"%>
               <%= f.hidden_field :longitude, :value => "longitude", :id => "longitude"  -%>
               <%= f.hidden_field :latitude, :value => "latitude", :id => "latitude" -%>
               <%= f.hidden_field :prefecture, :value => "prefecture", :id => "prefecture"  -%>
               <%= f.hidden_field :adress, :value => "adress", :id => "adress"  -%>
+              <h6>作品名</h6>
+
+              <%= f.fields_for :contents do |ff| %>
+                <%= ff.lavel :name %>
+                <%= ff.text_field :name, class: "location_contents"%>
+              <% end %>
               </span></p>
 
               <%= f.submit "作成"%>
@@ -168,7 +188,7 @@ $(window).on('load',function(){
     </div>
     <div class="modal-content">
         <div class="map_button" data-dismiss="modal" aria-hidden="true"><span>
-      <%= link_to "地図を表示", place_talks_path,method: :post, remote: true, class:"submit" %></span></div>
+      <%= link_to "地図を表示", place_talks_path,method: :post, remote: true, class:"submit", id:"modal_submit" %></span></div>
 </div>
 
 <div id="comment">
@@ -178,32 +198,7 @@ $(window).on('load',function(){
 <button type="button" class="btn btn-primary modal_button" data-toggle="modal" data-target="#myModal" style="display: none"></button>
 <!-- モーダルウィンドウfin -->
 
-<h1>New place</h1>
 
-<table>
-    <% @place_talks.each do |pt| %>
-      <tr>
-        <td><%= pt.user.username %>さんが</td>
-        <!-- ここから場所の名前の登録の有無によって分岐 -->
-        <% if pt.place_name == nil %>
-		<td><%= pt.adress %>に</td>
-		<% else %>
-		<td><%= pt.place_name %>に</td>
-		<% end %>
-		<!-- ここまで -->
-        <td><%= pt.content.name %>を登録しました！</td>
-        <td><%= link_to 'Show', place_talks_path(pt) %></td>
-		<% if current_user != nil %>
-		<% if pt.user.id == current_user.id %>
-        <td><%= link_to 'Edit', edit_place_talk_path(pt.id) %></td>
-		<% else %>
-		<% end %>
-		<% else %>
-		<% end %>
-
-      </tr>
-    <% end %>
-</table>
 <style>
 /*bootstrapのデフォルト設定をオーバーライト*/
 .modal-content{

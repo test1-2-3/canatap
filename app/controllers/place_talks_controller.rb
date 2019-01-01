@@ -2,7 +2,12 @@ class PlaceTalksController < ApplicationController
    before_action :authenticate_user! 
    protect_from_forgery except: :search
   def index
-    @place_talks = PlaceTalk.all.order(created_at: "DESC")
+    # @location = Location.new(location_params)
+    # @location.contents.build
+    @place_talks = Location.all.order(created_at: "DESC")
+    from  = Time.now.at_beginning_of_day
+    to    = (from + 3.day).at_end_of_day
+    @place_talk = Location.where(created_at: from...to)
 
   end
 
@@ -43,6 +48,8 @@ class PlaceTalksController < ApplicationController
   def create
     if params[:location] #作成ボタン
       @location = Location.new(location_params)
+      @location.contents.build
+      # binding.pry
       @location.user_id = current_user.id
       @location.username = current_user.username
         # binding.pry
@@ -71,6 +78,6 @@ class PlaceTalksController < ApplicationController
 
   private
   def location_params
-      params.require(:location).permit(:adress, :longitude, :latitude,:prefecture,:image,:comment,:content_id,)
+      params.require(:location).permit(:adress, :longitude, :latitude,:prefecture,:image,:comment,:content_id, contents_attributes:[:id,:name])
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_30_082344) do
+ActiveRecord::Schema.define(version: 2018_12_31_034320) do
 
   create_table "content_tagmaps", force: :cascade do |t|
     t.integer "tag_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2018_12_30_082344) do
     t.text "introduction"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "location_id"
   end
 
   create_table "edit_contents", force: :cascade do |t|
@@ -54,6 +55,13 @@ ActiveRecord::Schema.define(version: 2018_12_30_082344) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "location_contents", force: :cascade do |t|
+    t.integer "content_id"
+    t.integer "location_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "prefecture"
     t.string "place_name"
@@ -67,6 +75,7 @@ ActiveRecord::Schema.define(version: 2018_12_30_082344) do
     t.string "username"
     t.text "image_id"
     t.string "content_id"
+    t.string "name"
   end
 
   create_table "place_talk_comments", force: :cascade do |t|

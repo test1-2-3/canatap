@@ -241,7 +241,7 @@ footer {
 }
 
 .input input {
-   height: 50px;
+   height: 45px;
    top: 10px;
    border: none;
    background: transparent;
@@ -291,7 +291,7 @@ footer {
    left: 0;
    z-index: 2;
    cursor: pointer;
-   line-height: 50px;
+   line-height: 45px;
 }
 
 .button.login {
@@ -362,7 +362,7 @@ footer {
 }
 
 .button {
-   margin: 40px 0 10px 0;
+   margin: 0px 0 50px 0;
    overflow: hidden;
    z-index: 2;
 }
@@ -371,6 +371,7 @@ footer {
    cursor: pointer;
    position: relative;
    z-index: 2;
+   margin:25px auto;
 }
 
 .pass-forgot {
@@ -397,7 +398,7 @@ footer {
    left: 0;
    overflow: inherit;
    border-radius: 10px;
-   padding: 60px 50px 40px 50px;
+   padding: 50px 50px 40px 50px;
 }
 
 .overbox .title,
@@ -407,6 +408,7 @@ footer {
    position: relative;
    color: #fff !important;
    display: none;
+   margin-bottom: -5px;
 }
 
 .overbox .title {
@@ -526,5 +528,7 @@ html {
    list-style-type: none;
    outline: none;
 }
+
+
 
 
