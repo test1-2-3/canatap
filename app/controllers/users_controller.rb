@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
-    binding.pry
     @talk = UserTalk.new
     @room = Room.find_by(user_id: params[:id])
     @talk1 = UserTalk.where(room_id: @room.id)

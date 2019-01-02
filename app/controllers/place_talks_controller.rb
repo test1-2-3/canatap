@@ -20,7 +20,7 @@ class PlaceTalksController < ApplicationController
   end
 
   def show
-    @place_talk = PlaceTalk.find(params[:id])
+    @place_talk = Location.find(params[:id])
     @place_talk_comment = PlaceTalkComment.new
   end
 
