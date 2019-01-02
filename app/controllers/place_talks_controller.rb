@@ -2,12 +2,20 @@ class PlaceTalksController < ApplicationController
    before_action :authenticate_user! 
    protect_from_forgery except: :search
   def index
-    # @location = Location.new(location_params)
-    # @location.contents.build
-    @place_talks = Location.all.order(created_at: "DESC")
-    from  = Time.now.at_beginning_of_day
-    to    = (from + 3.day).at_end_of_day
-    @place_talk = Location.where(created_at: from...to)
+      @place_talks = Location.all.order(created_at: "DESC")
+      from  = Time.now.at_beginning_of_day
+      to    = (from + 3.day).at_end_of_day
+      @place_talk = Location.where(created_at: from...to)
+      @location = Location.new
+      @location.contents.build
+      # ここから３回めのajaxでうけとった値をContentsにもっていく予定
+      # @p = Location.where(id: params[:id])
+      # binding.pry
+      # if @place = Content.where(location_id: @p.id).exists?
+      #   else
+      #     @place = aaa　データがなかった場合の仮処理
+      # end
+
 
   end
 
@@ -17,14 +25,9 @@ class PlaceTalksController < ApplicationController
   end
 
   def new
-    @PlaceTalks = PlaceTalk.new(place_talk_params)
-
-    if @PlaceTalk.save
-      puts "asss"
-      render 
-    else
-      render json: {result: "ng", msg: @PlaceTalk.errors.messages}
-    end
+      @content = Content.new
+      @location = Location.new(location_params)
+      @location.contents.build
   end
 
   def edit
@@ -47,16 +50,16 @@ class PlaceTalksController < ApplicationController
 
   def create
     if params[:location] #作成ボタン
+      # @content = Content.new
       @location = Location.new(location_params)
-      @location.contents.build
       # binding.pry
       @location.user_id = current_user.id
+      # @location.content.user_id = current_user.id
       @location.username = current_user.username
         # binding.pry
       if @location.save
         # binding.pry
         @locations = Location.all
-        puts "asss"
         render json: {result: "ok", location: @locations}
       else
         render json: {result: "ng", msg: @location.errors.messages}
@@ -78,6 +81,6 @@ class PlaceTalksController < ApplicationController
 
   private
   def location_params
-      params.require(:location).permit(:adress, :longitude, :latitude,:prefecture,:image,:comment,:content_id, contents_attributes:[:id,:name])
+      params.require(:location).permit(:adress, :longitude, :latitude,:prefecture,:image,:comment,:content_id,:name, contents_attributes:[:id])#:nameはContentに送信に変更予定
   end
 end

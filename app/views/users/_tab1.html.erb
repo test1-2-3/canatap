@@ -4,38 +4,60 @@
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 <div class="container">
-  <% @user.place_talks.each do |pt| %>
-  	<div class="well">
+  <table>
+  <% @user.locations.each do |pt| %>
     	<div class="media">
-      		<a class="pull-left" href="#">
-    		<%= attachment_image_tag pt, :image,:size => "100x100",fallback: 'no_image.jpg', class: "place_image" %>
-  			</a>
-	  		<div class="media-body">
-	    		<h4 class="media-heading"><%= pt.place_name %></h4>
-	        	<p><%= pt.place_talk %></p>
-	        	<ul class="list-inline list-unstyled">
-		  			<li>
-		  				<span><i class="glyphicon glyphicon-calendar"></i> <%= pt.created_at.strftime('%Y/%m/%d') %></span>
-		  			</li>
-		            <li>|</li>
-		            <li>
-		            <span><i class="glyphicon glyphicon-comment"> <%= pt.place_talk_comments.count %>コメント</i></span>
-		        	</li>
-		            <li>|</li>
-		            <%= link_to "Show", place_talk_path(pt.id) %>
-		            <li>|</li>
-		            <% if @user == current_user %>
-		            <li>
-						<%= link_to "Edit", edit_place_talk_path(pt.id) %>
-		            </li>
-		            <li>|</li>
-		            <li>
-						<%= link_to "Delete", place_talk_path(pt.id), method: :delete,"data-confirm" => "本当に削除しますか?"  %>
-		            </li>
-		            <% end %>
-				</ul>
-			</div>
+        <tr>
+          <td>
+        		<a class="pull-left" href="#">
+      		<%= attachment_image_tag pt, :image,:size => "70x70",fallback: '/images/no_image2.png', class: "place_image" %>
+    			</a>
+          </td>
+          <td>
+    	  		<div class="media-body">
+    	    		<h6 class="media-heading"><%= pt.adress %></h6>
+    	        	<p class="location_comment"><%= pt.comment %></p>
+    	        	<ul class="list-inline list-unstyled">
+      		  			<li>
+      		  			   <i class="glyphicon glyphicon-calendar"></i> <%= pt.created_at.strftime('%Y/%m/%d') %>
+      		  			 |</li>
+    	            <li>
+    	               <i class="glyphicon glyphicon-comment"> <%= pt.place_talk_comments.count %>コメント</i>
+    		        	</li>
+    		          <br>
+                  <li>
+    		            <%= link_to "Show", place_talk_path(pt.id) %>
+    		           |</li>
+    		            <% if @user == current_user %>
+    		          <li>
+    						    <%= link_to "Edit", edit_place_talk_path(pt.id) %>
+    		           |</li>
+    		          <li>
+    						    <%= link_to "Delete", place_talk_path(pt.id), method: :delete,"data-confirm" => "本当に削除しますか?"  %>
+    		          </li>
+    		            <% end %>
+    				    </ul>
+    			  </div>
+          </td>
+        </tr>
 	    </div>
-	</div>
 	<% end %>
+  </table>
 </div>
+<style>
+.container {
+  margin-top:10px;
+}
+.location_comment{
+  text-align: left;
+  margin:0 0 0 3px;
+}
+
+.list-inline{
+  text-align: left;
+}
+
+.list-inline >li{
+  font-size: 10px;
+}
+</style>

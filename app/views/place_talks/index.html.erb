@@ -8,7 +8,7 @@
 <br>
 
 
-<div id="map" style="width:1000px; height:550px"></div>
+<div id="map" style="width:1000px; height:500px"></div>
 
 <script type="text/javascript">
 //mapを新しく作成
@@ -78,32 +78,51 @@ window.onload = function(){
       var marker = new Y.Marker(new Y.LatLng(lat,lon));
       // console.log(locations[i].image_id)
       //markerにクリックイベントをつける（bindする）
-      
       marker.bind('click', markerClicked);
-      console.log(locations[i]);
       marker.bindInfoWindow(
         '<h6>投稿者</h6>' 
         + locations[i].username
         + '<br><h5>作品名</h5>'
-        + locations[i].comment
+        + locations[i].name
         + '<br><h5>コメント</h5><span></span>'
         + locations[i].comment
         );
 
-      // console.log()
+      //ここから３回めのajaxについて考え中
+
+      // var id = locations[i].id
+      // Number(id)
+      // $.ajax({
+      //     type:'GET',
+      //     url: '/place_talks',
+      //     data: {id: id},
+      //     dataType: 'json'
+      //   });
+      // console.log(locations[i]);
+      // // console.log()
+
       ymap.addFeature(marker);
       //formの中を空にする
-      // console.log("=============")
       $(".location_comment").val("");
-    }
-          $('.photo').children('img').attr('src', img_url+'/image.jpeg');
+      $(".location_content").val("");
 
-    // console.log(e.detail[2]["response"])
+      // 追加フォームウィンドウを消す
+      if($(function(){
+        $('#location').on('mouseleave',function(){
+          $("#location").fadeOut();
+        })
+      }));
+    }
+
+    //ここから画像の値を引用について考え中
+      // $('.photo').children('img').attr('src', img_url+'/image.jpeg');
+
   })
      // 地図をｸﾘｯｸしたのときマーカーを作成
     Y.Event.addListener(ymap, 'click', clickMap);
         function clickMap(latlng){
-          $('#location').css('display', 'block')//下のフォームを表示
+          $('#location').fadeIn()//下のフォームを表示
+
             var location = latlng
             // console.log(location);
 
@@ -134,7 +153,7 @@ window.onload = function(){
 $(window).on('load',function(){
     $('#myModal').modal('show');
 });
-
+// 新着プッシュ通知
 Push.Permission.request();
 Push.create('更新履歴', {
   body:'<%= render 'push', place_talk: @place_talks %>',
@@ -146,33 +165,37 @@ Push.create('更新履歴', {
   console.log(this);
   }
 });
+$(function(){
+  $('.submit_button').click(function(){
+    $("#location").hide();
+  })
+});
+
 </script>
 <!-- ここから追加フォームー -->
 <div id="location" style="display: none">
-  <div class="row row-center">
+  <div class="row rowleft">
     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5"></div>
       <div class="col-lg-10 col-md-9 col-sm-8 col-xs-7">
         <div class="popover right show"style="position:relative; top=-90px; left=100px; max-width:100%; display:inline;">
           <div class="arrow"></div>
           <div class="popover-content">
-            <p id="notice"><%= notice %></p>
 
             <%= form_with model: Location.new, url: place_talks_path,method: :post,class:"submit" do |f| %>
-              <h6>Comment</h6>
-              <%= f.text_field :comment,class: "location_comment"%>
-              <%= f.hidden_field :longitude, :value => "longitude", :id => "longitude"  -%>
-              <%= f.hidden_field :latitude, :value => "latitude", :id => "latitude" -%>
-              <%= f.hidden_field :prefecture, :value => "prefecture", :id => "prefecture"  -%>
-              <%= f.hidden_field :adress, :value => "adress", :id => "adress"  -%>
-              <h6>作品名</h6>
-
-              <%= f.fields_for :contents do |ff| %>
-                <%= ff.lavel :name %>
-                <%= ff.text_field :name, class: "location_contents"%>
-              <% end %>
-              </span></p>
-
-              <%= f.submit "作成"%>
+                <h6>作品名</h6>
+                <%= f.text_field :name,class: "location_content"%>
+                <h6>Comment</h6>
+                <%= f.text_field :comment,class: "location_comment"%>
+                <%= f.hidden_field :longitude, :value => "longitude", :id => "longitude"  -%>
+                <%= f.hidden_field :latitude, :value => "latitude", :id => "latitude" -%>
+                <%= f.hidden_field :prefecture, :value => "prefecture", :id => "prefecture"  -%>
+                <%= f.hidden_field :adress, :value => "adress", :id => "adress"  -%>
+                <!--ここから Contentモデルへネスとしてデータ送信予定  -->
+                <!-- # f.fields_for :contents, @location.contents.build do |ff| %>
+                  # ff.text_field :name, class: "location_contents"%>
+                # end %> -->
+                </span></p>
+                <input type="submit" value"作成" class="submit_button">
             <% end %>
           </div>
         </div>
@@ -216,6 +239,8 @@ Push.create('更新履歴', {
 .user_body::before{
   /* 透過した黒を重ねる */
   background-color: rgba(0,0,0,0.5);
+  height: 692px;
+  width: 1411px;
   position: absolute;
   top: 0;
   right: 0;
@@ -226,8 +251,37 @@ Push.create('更新履歴', {
 /*吹き出しの位置調整*/
 .row {
     position: absolute;
-    top: 350px;
-    left: 700px;
+    top: 266px;
+    left: 658px;
+}
+/*作成するボタン*/
+.submit_button {
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 9pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 4px 4px;   /* 余白       */
+  background    : #01DFD7;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  border        : 2px solid #01DFD7;    /* 枠の指定 */
+}
+.submit_button:hover {
+  color         : #006600;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
+}
+.popover-content {
+    padding: 10px 37px;
+    width: 350px;
+    border-radius : 5%;  
+}
+
+input.location_comment{
+  width: 230px;
+  height: 84px;
+  vertical-align: top;
 }
 </style>
 
