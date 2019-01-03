@@ -47,7 +47,7 @@ window.onload = function(){
       // alert(ll.toString());
        $.ajax({
           type:'POST', // リクエストのタイプはGETです
-          url: '/search', // URLは/mealsを指定します。つまりmeals#indexのアクションをリクエストします
+          url: '/newmap', // URLは/mealsを指定します。つまりmeals#indexのアクションをリクエストします
           data: {location: this.getLatLng().toString()}, // コントローラへフォームの値を送信します
           dataType: 'json' // データの型はjsonで指定します
         }).done(function (data){

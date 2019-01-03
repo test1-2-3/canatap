@@ -41,7 +41,7 @@ class PlaceTalksController < ApplicationController
     render json: {result: "ok", location: location}
   end
 
-  def search
+  def newmap
     lat = params["location"].split(",")[0].to_f
     lon = params["location"].split(",")[1].to_f
     location = Location.where(latitude: lat).where(longitude: lon)[0]

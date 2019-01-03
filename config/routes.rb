@@ -18,5 +18,5 @@ Rails.application.routes.draw do
     get 'search' => 'searches#search', as: "search"
 	get "/homes/about" => "homes#about"
 	root to: 'place_talks#index'
-	post "/search" => "place_talks#search"
+	post "/newmap" => "place_talks#newmap"
 end
