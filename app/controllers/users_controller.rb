@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     @talk = UserTalk.new
     @room = Room.find_by(user_id: params[:id])
     @talk1 = UserTalk.where(room_id: @room.id)
+    @favorites = Favorite.where(user_id: @user.id)
   end
 
   def edit

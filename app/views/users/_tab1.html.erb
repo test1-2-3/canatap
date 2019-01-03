@@ -24,18 +24,18 @@
     	            <li>
     	               <i class="glyphicon glyphicon-comment"> <%= pt.place_talk_comments.count %>コメント</i>
     		        	</li>
-                  <% if @place_talk.favorited_by?(current_user) %>
+                  <% if pt.favorited_by?(current_user) %>
                   <li>
-                    <%= link_to location_favorites_path(@place_talk), method: :delete do %>
+                    <%= link_to location_favorites_path(pt,location_id: pt.id), method: :delete do %>
                     <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
-                    <%= @place_talk.favorites.count %> いいね
+                    <%= pt.favorites.count %> いいね
                     <% end %>
                   </li>
                     <% else %>
                     <li>
-                    <%= link_to location_favorites_path(@place_talk), method: :post do %>
+                    <%= link_to location_favorites_path(location_id: pt.id), method: :post do %>
                       <i class="fa fa-heart-o" aria-hidden="true"></i>
-                    <%= @post_image.favorites.count %> いいね
+                    <%= pt.favorites.count %> いいね
                     <% end %>
                   </li>
                   <% end %>

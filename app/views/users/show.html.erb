@@ -1,3 +1,6 @@
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+</head>
 
 <div class="user_syow_head">
 	<div class="cont_principal">
@@ -23,10 +26,10 @@
 					<div class="cont_over_hidden">
 					    <div class="cont_tabs">
 						    <ul id="tab">
-								<li class="tub_menu" id = 0><a href="#" class="now"><i class="fas fa-comments"> profile</i></a></li>
-								<li class="tub_menu" id = 1><a href="#"><i class="fas fa-history"> 投稿履歴</i></a></li>
-								<li class="tub_menu" id = 2><a href="#"><i class="fab fa-gratipay"> お気に入り</i></a></li>
-								<li class="tub_menu" id = 3><a href="#""><i class="fas fa-tags"> タグ</i></a></li>
+								<li class="tab_menu" id = 0><a href="#tab0" id="first" class="now"><i class="fas fa-comments"> profile</i></a></li>
+								<li class="tab_menu" id = 1><a href="#tab1" id="a1"><i class="fas fa-history"> 投稿履歴</i></a></li>
+								<li class="tab_menu" id = 2><a href="#tab2" id="a2"><i class="fab fa-gratipay"> お気に入り</i></a></li>
+								<li class="tab_menu" id = 3><a href="#tab3" id="a3"><i class="fas fa-tags"> タグ</i></a></li>
 						    </ul>
 					    </div>
 					    <div class="area">
@@ -42,7 +45,7 @@
 							</div>
 							<div id="section2" class="litle_menu">
 							    <h3 class="litle_title">お気に入り</h3>
-
+							    <%= render 'tab2', user: @user %>
 							</div>
 							<div id="section3" class="litle_menu">
 							    <h3 class="litle_title">タグ</h3>
@@ -62,7 +65,36 @@
 
 <script>
 $(function(){
-	$('.tub_menu').on('click',function(){
+	$("#tab li a").click(function(){
+	    active =  $(this).attr("href");
+	    // console.log(active)
+    	Cookies.set('Tab', active, { expires: 1 });
+    });
+    	// console.log(document.cookie)
+    $(function(){
+	   last = Cookies.get('Tab')
+	   // console.log(last)
+	  	if(last != null){
+	  	$('.cont_modal').addClass('cont_modal_active')
+	  	window.location.hash = last;
+	  	var t = last.substr( 4, 1 );
+	  	class_name = "section" + t;
+	  	$(".litle_menu").hide();
+	 	$("#" + class_name).fadeIn();
+	 	a_name = "a" + t;
+	 	// console.log(a_name)
+	 			if ($('#tab li a').hasClass('now')) {
+				$('#tab li a').removeClass('now');
+	 			$("#" + a_name).addClass("now")
+	  	// console.log("a[herf = last]")
+		};
+		};
+	});
+})
+
+
+$(function(){
+	$('.tab_menu').on('click',function(){
  		id = $(this).attr("id");
  		class_name = "section" + id;
  		$(".litle_menu").hide();

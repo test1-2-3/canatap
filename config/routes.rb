@@ -9,6 +9,10 @@ Rails.application.routes.draw do
 	resources :place_talks do
 		resource :favorites, only: [:create, :destroy]
 	end
+	resources :locations do
+		resource :favorites, only: [:create, :destroy]
+	end
+
 
 	resources :contents
     get 'search' => 'searches#search', as: "search"

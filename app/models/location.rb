@@ -7,6 +7,7 @@ class Location < ApplicationRecord
 	has_many :contents
 	accepts_nested_attributes_for :contents
 	attachment :image
+	has_many :fav_loc, through: :favorites, source: :location
 
 	def favorited_by?(user)
       favorites.where(user_id: user.id).exists?
