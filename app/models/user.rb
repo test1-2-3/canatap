@@ -18,6 +18,8 @@ class User < ApplicationRecord
     end
   end
 
+  acts_as_ordered_taggable_on :interests
+
 	has_many :place_talks, dependent: :destroy
   has_many :locations, dependent: :destroy
 	has_one :rooms, dependent: :destroy

@@ -70,3 +70,6 @@ gem "refile-mini_magick"
 gem 'faker'
 gem 'bootstrap-sass'
 gem 'jquery-rails'
+gem 'kaminari'
+gem 'bootstrap-tagsinput-rails'
+gem 'acts-as-taggable-on'

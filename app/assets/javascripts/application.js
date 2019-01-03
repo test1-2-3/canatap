@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require jquery
 //= require bootstrap-sprockets
+//= require bootstrap-tagsinput.min
 //= require_tree .
 
 // ここからログインページ
