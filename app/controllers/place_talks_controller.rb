@@ -2,7 +2,7 @@ class PlaceTalksController < ApplicationController
    before_action :authenticate_user! 
    protect_from_forgery except: :search
   def index
-      @place_talks = Location.all.order(created_at: "DESC")
+      @place_talks = Location.order(created_at: "DESC").page(params[:page]).per(3)
       from  = Time.now.at_beginning_of_day
       to    = (from + 3.day).at_end_of_day
       @place_talk = Location.where(created_at: from...to)
