@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
+<div class="container">
+  <table>
+  <% @favorites.each do |fv| %>
+      <div class="media">
+        <tr>
+          <td>
+            <a class="pull-left" href="#">
+          <%= attachment_image_tag fv.location, :image,:size => "70x70",fallback: '/images/no_image2.png', class: "place_image" %>
+          </a>
+          </td>
+          <td>
+            <div class="media-body">
+              <h6 class="media-heading"><%= fv.location.adress %></h6>
+                <p class="location_comment"><%= fv.location.comment %></p>
+                <ul class="list-inline list-unstyled">
+                  <li>
+                     <i class="glyphicon glyphicon-calendar"></i> <%= fv.location.created_at.strftime('%Y/%m/%d') %>
+                   |</li>
+                  <li>
+                     <i class="glyphicon glyphicon-comment"> <%= fv.location.place_talk_comments.count %>コメント</i>
+                  </li>
+                </ul>
+            </div>
+          </td>
+        </tr>
+      </div>
+  <% end %>
+  </table>
+</div>
+<style>
+.container {
+  margin-top:10px;
+}
+.location_comment{
+  text-align: left;
+  margin:0 0 0 3px;
+}
+
+.list-inline{
+  text-align: left;
+}
+
+.list-inline >li{
+  font-size: 10px;
+}
+</style>

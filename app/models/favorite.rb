@@ -1,4 +1,4 @@
 class Favorite < ApplicationRecord
-	belongs_to :user
-	belongs_to :place_talk
+	belongs_to :user,optional: true
+	belongs_to :location,optional: true
 end

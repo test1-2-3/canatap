@@ -1,26 +1,47 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
-  <div class="field">
-      <%= f.label :ユーザーネーム %><br />
-      <%= f.text_field :username ,autofocus: true %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<head>
+<script>
+    $(function() { $('input').removeAttr('id')});
+    $(function() { $('form').removeAttr('id')});
+    console.log(this)
+</script>
+</head>
+<style>
+header,footer{
+  display:none;
+}
+</style>
+<div class="materialContainer">
+  <div class="box">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="title">LOGIN</div>
+    <div class="input">
+       <%= f.label :ユーザーネーム %><br />
+       <%= f.text_field :username ,autofocus: true %>
+       <span class="spin"></span>
     </div>
-  <% end -%>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+    <div class="input">
+       <%= f.label :password %><br />
+       <%= f.password_field :password, autocomplete: "current-password" %>
+       <span class="spin"></span>
+    </div>
+
+    <div class="button login">
+        <div class="actions">
+          <button>
+            <%= f.submit "Log in", :class =>"btn" %>
+          </button>
+        </div>
+    </div>
+
+    <div class="pass-forgot">
+      <%= render "devise/shared/links" %>
+    </div>
+
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  <% end %>
+  <div class="overbox">
+      <div class="material-button alt-2"><span class="shape"></span></div>
+      <%= render "devise/registrations/new" %>
+　</div>
+</div>

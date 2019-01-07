@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require jquery
 //= require bootstrap-sprockets
+//= require bootstrap-tagsinput.min
 //= require_tree .
 
 // ここからログインページ
@@ -21,7 +22,7 @@ $(function() {
    $(".input input").focus(function() {
 
       $(this).parent(".input").each(function() {
-        console.log(this)
+      	 console.log(this);
          $("label", this).css({
             "line-height": "18px",
             "font-size": "18px",
@@ -39,7 +40,7 @@ $(function() {
       if ($(this).val() == "") {
          $(this).parent(".input").each(function() {
             $("label", this).css({
-               "line-height": "60px",
+               "line-height": "45px",
                "font-size": "24px",
                "font-weight": "300",
                "top": "10px"
@@ -114,7 +115,7 @@ $(function() {
 
          setTimeout(function() {
             $(".shape").css({
-               "width": "50%",
+               "width": "59%",
                "height": "50%",
                "transform": "rotate(45deg)"
             })

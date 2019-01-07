@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_26_075954) do
+ActiveRecord::Schema.define(version: 2019_01_03_113263) do
 
   create_table "content_tagmaps", force: :cascade do |t|
     t.integer "tag_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2018_12_26_075954) do
     t.text "introduction"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "location_id"
   end
 
   create_table "edit_contents", force: :cascade do |t|
@@ -46,10 +47,18 @@ ActiveRecord::Schema.define(version: 2018_12_26_075954) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "location_id"
   end
 
   create_table "genres", force: :cascade do |t|
     t.string "genre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "location_contents", force: :cascade do |t|
+    t.integer "content_id"
+    t.integer "location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -63,6 +72,11 @@ ActiveRecord::Schema.define(version: 2018_12_26_075954) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "comment"
+    t.integer "user_id"
+    t.string "username"
+    t.text "image_id"
+    t.string "content_id"
+    t.string "name"
   end
 
   create_table "place_talk_comments", force: :cascade do |t|
@@ -71,6 +85,7 @@ ActiveRecord::Schema.define(version: 2018_12_26_075954) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "location_id"
   end
 
   create_table "place_talks", force: :cascade do |t|
@@ -93,10 +108,29 @@ ActiveRecord::Schema.define(version: 2018_12_26_075954) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.integer "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.string "tagger_type"
+    t.integer "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
   create_table "tags", force: :cascade do |t|
-    t.integer "tag"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "name"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "user_tagmaps", force: :cascade do |t|

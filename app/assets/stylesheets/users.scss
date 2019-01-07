@@ -3,9 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 /*新規登録画面（仮）*/
-.user_new{
-	margin-top: 100px;
-}
+/*.user_new{*/
+	/*margin-top: 100px;*/
+/*}*/
 
 /*プロフィールカード*/
 
@@ -69,6 +69,20 @@ background-color:#0e76a8;
   text-align: center;
 }
 
+.my_tag{
+	text-align:left;
+}
+
+.tag_title{
+	text-align: left;
+    margin-bottom: 1px;
+}
+
+.tag_user{
+	margin-right: 318px;
+}
+
+
 /*編集ページ*/
 .user_edit_font{
 	text-align: center;
@@ -77,6 +91,7 @@ background-color:#0e76a8;
 .users_edit_submit{
 	margin-bottom: 10px;
 }
+
 
 .buck{
 	float: right;

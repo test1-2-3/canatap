@@ -2,6 +2,7 @@
 <html>
   <head>
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
     <title>Canatap</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,48 +14,76 @@
   <body>
 
     <!-- ヘッダー -->
-    <header id="head">
-      <nav class="products_index_header clearfix">
-        <%= link_to place_talks_path do %>
-          <div class="products_index_header_title">
-            <img src='/images/logo.png'class="products_index_header_logo">
-          </div>
-        <% end %>
-            <!-- 検索機能-->
-        <div>
-       <!--    検索機能予定 -->
-        </div>
-            <!-- あとで記載予定！！ -->
+    <header id="head clearfix">
 
-        <ul class="products_index_header_itembox">
-            <!-- ここはログイン時のみ -->
-          <% if user_signed_in? %>
-            <li class="products_index_header_item">
-              <%= link_to current_user.username, user_path(current_user.id), { :class => "products_index_header_font" }  %>
-            </li>
-            <!-- ここから管理者ログイン時のみリンク表示 -->
-            <% if current_user.try(:admin?) %>
-            <li class="products_index_header_item">
-              <div>
-              <%= link_to "管理ページ", "/admin", { :class => "products_index_header_font" } %>
-              </div>
-            </li>
+        <%= link_to place_talks_path do %>
+        <div class="products_index_header_title">
+          <img src='/images/logo.png'class="products_index_header_logo">
+        </div>
+        <% end %>
+        <div class="products_index_heade_center">
+          <div class="location_new">
+            <% @place_talks.each do |new_p| %>
+            <span><%= new_p.created_at.strftime('%Y/%m/%d') %></span>
+            <%= link_to user_path(new_p.user_id),:style =>"text-decoration:none" do |f| %>
+            <span><%=new_p.username %>
+            <% end %>さんが</span>
+            <span><%=new_p.adress %>に</span>
+            <span><%=new_p.name %>を登録しました。</span><br>
             <% end %>
-             <!-- ここまで管理者ログイン時のみリンク表示 -->
-            <li class="products_index_header_item">
-              <%= link_to "ログアウト", destroy_user_session_path, :style=>"color: #222222; text-decoration:none; font-size:14px", method: :delete  %>
-            </li>
-            <!-- ここ以下がログアウト時のみ -->
-          <% else %>
-            <li class="products_index_header_item">
-              <%= link_to "新規登録", new_user_registration_path,:style=>"color: #222222; text-decoration:none; font-size:14px" %>
-            </li>
-            <li class="products_index_header_item">
-              <%= link_to " ログイン", new_user_session_path,:style=>"color: #222222; text-decoration:none; font-size:14px" %>
-            </li>
-          <% end %>
-        </ul>
-      </nav>
+          </div>
+          <div class="location_result" style="display:none">
+            <% @result.each do |result| %>
+            <span><%=result.username %>さんが</span>
+            <span><%=result.adress %>に</span>
+            <span><%=result.name %>を登録しています。</span><br>
+            <% end %>
+          </div>
+        </div>
+        <div class="products_index_heade_right">
+          <table class="products_index_header_itembox">
+            <!-- 検索機能-->
+          <th class="search">
+            <dl class="searchbox">
+              <%= search_form_for @search, url: place_talks_path do |f| %>
+                <dt><%= f.text_field :adress ,placeholder: '住所を入力....' %></dt>
+                <dd><%= f.submit ("検索") , class: 'search-btn' %></dd>
+              <% end %>
+            </dl>
+          </th>
+
+
+              <!-- ここはログイン時のみ -->
+          <tr>
+            <% if user_signed_in? %>
+              <td class="products_index_header_item">
+                <%= link_to current_user.username, user_path(current_user.id), { :class => "products_index_header_font" }  %>
+              </td>
+              <!-- ここから管理者ログイン時のみリンク表示 -->
+              <% if current_user.try(:admin?) %>
+              <td class="products_index_header_item">
+                <div>
+                <%= link_to "管理ページ", "/admin", { :class => "products_index_header_font" } %>
+                </div>
+              </td>
+              <% end %>
+               <!-- ここまで管理者ログイン時のみリンク表示 -->
+              <td class="products_index_header_item">
+                <%= link_to "ログアウト", destroy_user_session_path, :style=>"color: #222222; text-decoration:none; font-size:14px", method: :delete  %>
+              </td>
+              <!-- ここ以下がログアウト時のみ -->
+            <% else %>
+              <td class="products_index_header_item">
+                <%= link_to "新規登録", new_user_registration_path,:style=>"color: #222222; text-decoration:none; font-size:14px" %>
+              </td>
+              <td class="products_index_header_item">
+                <%= link_to " ログイン", new_user_session_path,:style=>"color: #222222; text-decoration:none; font-size:14px" %>
+              </td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+
     </header>
     <div class="user_body">
       <!-- deviseのエラーメッセージの表示領域 -->
@@ -81,3 +110,68 @@
   <!-- ここからフッター -->
 
 </html>
+<script>
+  $('.search_btn').click(function(){
+      $('.location_new').css('display','none');
+      $('.location_result').css('display','block');
+  });
+</script>
+<style>
+/* 検索ボックス */
+.products_index_heade_center{
+  width: 830px;
+  height: 100px;
+  margin: 0;
+  padding: 10px 80px 0;
+  float: left;
+}
+
+.products_index_heade_right{
+  height: 100px;
+  width: 370px;
+  margin-right: 50px;
+  float: left;
+}
+
+.search{
+  margin-left: 100px;
+  margin-bottom: 10px;
+}
+dl.searchbox{
+  width: 300px;
+  position:relative;
+  background-color:#fff;
+  border:1px solid #aaa;
+  border-radius:6px;
+  margin: 10px 0 0 0;
+}
+dl.searchbox dt{
+  padding:3px;
+}
+dl.searchbox dt input{
+  height:20px;
+  line-height:20px;
+  background:none;
+  border:none;
+}
+dl.searchbox dd{
+  position:absolute;
+  top:1px;
+  right:1px;
+  width:30%;
+}
+.search-btn{
+  display:block;
+  background:#01DFD7;
+  width:100%;
+  height:24px;
+  line-height:24px;
+  border:none;
+  border-radius: 0 6px 6px 0;
+  color:#FFF;
+}
+
+.search-btn:hover {
+  background:#04a09b;
+}
+</style>

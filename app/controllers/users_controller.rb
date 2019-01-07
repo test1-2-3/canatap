@@ -6,6 +6,8 @@ class UsersController < ApplicationController
     @talk = UserTalk.new
     @room = Room.find_by(user_id: params[:id])
     @talk1 = UserTalk.where(room_id: @room.id)
+    @favorites = Favorite.where(user_id: @user.id)
+    @talks = UserTalk.where("created_at >= ?", Time.zone.now.beginning_of_day)
   end
 
   def edit
@@ -27,7 +29,7 @@ class UsersController < ApplicationController
 
   private
 	def user_params
-	  params.require(:user).permit(:name,:password,:password_confirmation,:profile,:image,:users_comment)
+	  params.require(:user).permit(:name,:password,:password_confirmation,:profile,:image,:users_comment, :interest_list)
 	end
     def room_user
       if Room.where(user_id: params[:id]).exists?

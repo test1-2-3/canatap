@@ -1,13 +1,14 @@
 <head>
   <meta name="viewport" content="initial-scale=1.0,user-scalable=no">
   <script type="text/javascript" charset="utf-8" src="https://map.yahooapis.jp/js/V1/jsapi?appid=dj00aiZpPUxLVk9XdzYzandraCZzPWNvbnN1bWVyc2VjcmV0Jng9YWU-"></script>
+
 </head>
 <br>
 <br>
 <br>
 
 
-<div id="map" style="width:1000px; height:550px"></div>
+<div id="map" style="width:1000px; height:500px"></div>
 
 <script type="text/javascript">
 //mapを新しく作成
@@ -22,10 +23,12 @@ window.onload = function(){
         }
     });
 
-    ymap.drawMap(new Y.LatLng(35.66572, 139.73100), 17, Y.LayerSetId.NORMAL);//地図を表示
+    ymap.drawMap(new Y.LatLng(35.658561, 139.701312), 17, Y.LayerSetId.NORMAL);//地図を表示
 
-    var control = new Y.SearchControl();//検索フォームを追加
-    ymap.addControl(control);
+    // var control = new Y.SearchControl();//検索フォームを追加
+    // ymap.addControl(control)
+    ymap.addControl(new Y.SearchControl(), new Y.ControlPosition(Y.ControlPosition.BOTTOM_LEFT));
+
 
     var control = new Y.SliderZoomControlVertical();//ズームスライドバーを追加
     ymap.addControl(control);
@@ -44,7 +47,7 @@ window.onload = function(){
       // alert(ll.toString());
        $.ajax({
           type:'POST', // リクエストのタイプはGETです
-          url: '/search', // URLは/mealsを指定します。つまりmeals#indexのアクションをリクエストします
+          url: '/newmap', // URLは/mealsを指定します。つまりmeals#indexのアクションをリクエストします
           data: {location: this.getLatLng().toString()}, // コントローラへフォームの値を送信します
           dataType: 'json' // データの型はjsonで指定します
         }).done(function (data){
@@ -58,7 +61,7 @@ window.onload = function(){
              // console.log(comment)
         }).fail(function (data) {
            //通信失敗
-    　　　　alert('通信に失敗しました。');  
+            alert('通信に失敗しました。');  
     });
   }
 
@@ -71,39 +74,60 @@ window.onload = function(){
     for (var i = 0; i < locations.length; i++) {
       let lat = Number(locations[i].latitude)
       let lon = Number(locations[i].longitude)
+      var img_url = locations[i].image_id
       var marker = new Y.Marker(new Y.LatLng(lat,lon));
+      // console.log(locations[i].image_id)
       //markerにクリックイベントをつける（bindする）
       marker.bind('click', markerClicked);
-      console.log(locations[i]);
       marker.bindInfoWindow(
-        '<h5>作品名</h5>' 
-        + locations[i].comment 
-        + '<br><h5>投稿写真</h5>'
-        + locations[i].comment
+        '<h6>投稿者</h6>' 
+        + locations[i].username
+        + '<br><h5>作品名</h5>'
+        + locations[i].name
         + '<br><h5>コメント</h5><span></span>'
         + locations[i].comment
         );
+
+      //ここから３回めのajaxについて考え中
+
+      // var id = locations[i].id
+      // Number(id)
+      // $.ajax({
+      //     type:'GET',
+      //     url: '/place_talks',
+      //     data: {id: id},
+      //     dataType: 'json'
+      //   });
+      // console.log(locations[i]);
+      // // console.log()
+
       ymap.addFeature(marker);
       //formの中を空にする
-      // console.log("=============")
-      $(".users_edit_account_edit").val("");
+      $(".location_comment").val("");
+      $(".location_content").val("");
+
+      // 追加フォームウィンドウを消す
+      if($(function(){
+        $('#location').on('mouseleave',function(){
+          $("#location").fadeOut();
+        })
+      }));
     }
 
-    // console.log(e.detail[2]["response"])
+    //ここから画像の値を引用について考え中
+      // $('.photo').children('img').attr('src', img_url+'/image.jpeg');
+
   })
      // 地図をｸﾘｯｸしたのときマーカーを作成
     Y.Event.addListener(ymap, 'click', clickMap);
         function clickMap(latlng){
-          // let mylating = new Y.LatLng (35.664551986452906,139.73157935714718)
-          // console.log(mylating);
+          $('#location').fadeIn()//下のフォームを表示
 
-          // ymap.addFeature(new Y.Marker(mylating));
-          $('#location').css('display', 'block')//下のフォームを表示
             var location = latlng
             // console.log(location);
 
           $('#longitude').val(location.Lon);
-           console.log(location.Lat);
+           // console.log(location.Lat);
           $('#latitude').val(location.Lat);
            //onsole.log(location.Lon);
 
@@ -114,7 +138,7 @@ window.onload = function(){
            geocoder.execute(request , function( ydf ) {
               if ( ydf.features.length > 0 ) {
                 var feature = ydf.features[0];
-                console.log(feature);
+                // console.log(feature);
                 // alert(feature.property.Address);
                 // console.log(feature);
 
@@ -129,28 +153,50 @@ window.onload = function(){
 $(window).on('load',function(){
     $('#myModal').modal('show');
 });
+// 新着プッシュ通知
+Push.Permission.request();
+Push.create('更新履歴', {
+  body:'<%= render 'push', place_talk: @place_talks %>',
+  icon: '',
+  timeout: 8000, // 通知が消えるタイミング
+  vibrate: [100, 100, 100], // モバイル端末でのバイブレーション秒数
+  onClick: function() {
+  // 通知がクリックされた場合の設定
+  console.log(this);
+  }
+});
+
+$(function(){
+  $('.submit_button').click(function(){
+    $("#location").hide();
+  })
+});
+
 </script>
 <!-- ここから追加フォームー -->
 <div id="location" style="display: none">
-  <div class="row row-center">
+  <div class="row rowleft">
     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5"></div>
       <div class="col-lg-10 col-md-9 col-sm-8 col-xs-7">
         <div class="popover right show"style="position:relative; top=-90px; left=100px; max-width:100%; display:inline;">
           <div class="arrow"></div>
           <div class="popover-content">
-            <p id="notice"><%= notice %></p>
 
             <%= form_with model: Location.new, url: place_talks_path,method: :post,class:"submit" do |f| %>
-              <h4>Comment</h4>
-              <%= f.text_field :comment,class: "users_edit_account_edit"%>
-              <%= f.hidden_field :longitude, :value => "longitude", :id => "longitude"  -%>
-              <%= f.hidden_field :latitude, :value => "latitude", :id => "latitude" -%>
-              <%= f.hidden_field :prefecture, :value => "prefecture", :id => "prefecture"  -%>
-              <%= f.hidden_field :place_name, :value => "place_name", :id => "place_name"  -%>
-              <%= f.hidden_field :adress, :value => "adress", :id => "adress"  -%>
-              </span></p>
-
-              <%= f.submit "作成"%>
+                <h6>作品名</h6>
+                <%= f.text_field :name,class: "location_content"%>
+                <h6>Comment</h6>
+                <%= f.text_field :comment,class: "location_comment"%>
+                <%= f.hidden_field :longitude, :value => "longitude", :id => "longitude"  -%>
+                <%= f.hidden_field :latitude, :value => "latitude", :id => "latitude" -%>
+                <%= f.hidden_field :prefecture, :value => "prefecture", :id => "prefecture"  -%>
+                <%= f.hidden_field :adress, :value => "adress", :id => "adress"  -%>
+                <!--ここから Contentモデルへネスとしてデータ送信予定  -->
+                <!-- # f.fields_for :contents, @location.contents.build do |ff| %>
+                  # ff.text_field :name, class: "location_contents"%>
+                # end %> -->
+                </span></p>
+                <input type="submit" value"作成" class="submit_button">
             <% end %>
           </div>
         </div>
@@ -166,7 +212,7 @@ $(window).on('load',function(){
     </div>
     <div class="modal-content">
         <div class="map_button" data-dismiss="modal" aria-hidden="true"><span>
-      <%= link_to "地図を表示", place_talks_path,method: :post, remote: true, class:"submit" %></span></div>
+      <%= link_to "地図を表示", place_talks_path,method: :post, remote: true, class:"submit", id:"modal_submit" %></span></div>
 </div>
 
 <div id="comment">
@@ -176,32 +222,7 @@ $(window).on('load',function(){
 <button type="button" class="btn btn-primary modal_button" data-toggle="modal" data-target="#myModal" style="display: none"></button>
 <!-- モーダルウィンドウfin -->
 
-<h1>New place</h1>
 
-<table>
-    <% @place_talks.each do |pt| %>
-      <tr>
-        <td><%= pt.user.username %>さんが</td>
-        <!-- ここから場所の名前の登録の有無によって分岐 -->
-        <% if pt.place_name == nil %>
-		<td><%= pt.adress %>に</td>
-		<% else %>
-		<td><%= pt.place_name %>に</td>
-		<% end %>
-		<!-- ここまで -->
-        <td><%= pt.content.name %>を登録しました！</td>
-        <td><%= link_to 'Show', place_talks_path(pt) %></td>
-		<% if current_user != nil %>
-		<% if pt.user.id == current_user.id %>
-        <td><%= link_to 'Edit', edit_place_talk_path(pt.id) %></td>
-		<% else %>
-		<% end %>
-		<% else %>
-		<% end %>
-
-      </tr>
-    <% end %>
-</table>
 <style>
 /*bootstrapのデフォルト設定をオーバーライト*/
 .modal-content{
@@ -219,6 +240,8 @@ $(window).on('load',function(){
 .user_body::before{
   /* 透過した黒を重ねる */
   background-color: rgba(0,0,0,0.5);
+  height: 692px;
+  width: 1411px;
   position: absolute;
   top: 0;
   right: 0;
@@ -229,8 +252,37 @@ $(window).on('load',function(){
 /*吹き出しの位置調整*/
 .row {
     position: absolute;
-    top: 350px;
-    left: 700px;
+    top: 266px;
+    left: 658px;
+}
+/*作成するボタン*/
+.submit_button {
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 9pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 4px 4px;   /* 余白       */
+  background    : #01DFD7;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  border        : 2px solid #01DFD7;    /* 枠の指定 */
+}
+.submit_button:hover {
+  color         : #006600;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
+}
+.popover-content {
+    padding: 10px 37px;
+    width: 350px;
+    border-radius : 5%;  
+}
+
+input.location_comment{
+  width: 230px;
+  height: 84px;
+  vertical-align: top;
 }
 </style>
 
