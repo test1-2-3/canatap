@@ -25,13 +25,19 @@
           <div class="location_new">
             <% @place_talks.each do |new_p| %>
             <span><%= new_p.created_at.strftime('%Y/%m/%d') %></span>
-            <span><%=new_p.username %>さんが</span>
+            <%= link_to user_path(new_p.user_id),:style =>"text-decoration:none" do |f| %>
+            <span><%=new_p.username %>
+            <% end %>さんが</span>
             <span><%=new_p.adress %>に</span>
             <span><%=new_p.name %>を登録しました。</span><br>
             <% end %>
           </div>
           <div class="location_result" style="display:none">
-
+            <% @result.each do |result| %>
+            <span><%=result.username %>さんが</span>
+            <span><%=result.adress %>に</span>
+            <span><%=result.name %>を登録しています。</span><br>
+            <% end %>
           </div>
         </div>
         <div class="products_index_heade_right">
@@ -40,7 +46,7 @@
           <th class="search">
             <dl class="searchbox">
               <%= search_form_for @search, url: place_talks_path do |f| %>
-                <dt><%= f.text_field :adress ,placeholder: '検索するテキストを入力...' %></dt>
+                <dt><%= f.text_field :adress ,placeholder: '住所を入力....' %></dt>
                 <dd><%= f.submit ("検索") , class: 'search-btn' %></dd>
               <% end %>
             </dl>
@@ -113,7 +119,7 @@
 <style>
 /* 検索ボックス */
 .products_index_heade_center{
-  width: 700px;
+  width: 830px;
   height: 100px;
   margin: 0;
   padding: 10px 80px 0;
@@ -122,7 +128,7 @@
 
 .products_index_heade_right{
   height: 100px;
-  width: 500px;
+  width: 370px;
   margin-right: 50px;
   float: left;
 }
@@ -132,7 +138,7 @@
   margin-bottom: 10px;
 }
 dl.searchbox{
-  width: 350px;
+  width: 300px;
   position:relative;
   background-color:#fff;
   border:1px solid #aaa;
