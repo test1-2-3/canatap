@@ -1,41 +1,46 @@
 <div class="users_show_chats_box">
-			<div class="users_show_chats">
-				<div class="users_show_chats_table">
-					<% @talk1.each do |talk| %>
-					<div class="user_show_talks">
-						<div class="users_show_chats_litle_box">
-							<div class="user_show_talk_image", width="150px"><%= attachment_image_tag talk.user, :image,:size => "35x35",fallback: 'no_image.jpg', class: "users_show_chat_image_cicle" %></div>
-							<br>
-							<div class="user_show_talk_name" width="150px"><span><%= talk.user.username  %></span></div>
-						</div>
-						<div class="users_show_chats_litle_box">
- 							<div class="product_show_comment_date clearfix">
-                                <span style="float: left"><%= talk.created_at.strftime('%Y/%m/%d') %></span>
-                            </div>
-
-							<div class="product_show_balloon">
-								<div class="user_show_talk_content"><%= talk.user_talk %>
-									<% if talk.user_id == current_user.id %>
-									<div class="user_show_talk_destroy">
-										<p><%= link_to "", user_talk_path(talk.id), method: :delete, class: "far fa-trash-alt my-gray", "data-confirm" => "本当に削除しますか?"%></p>
-									</div>
-								</div>
-								<% end %>
-							</div>
-						</div>
+	<div class="users_show_chats">
+		<div class="users_show_chats_table">
+			<% @talk1.each do |talk| %>
+			<div class="user_show_talks">
+				<div class="users_show_chats_litle_box">
+					<div class="user_show_talk_image", width="150px"><%= attachment_image_tag talk.user, :image,:size => "35x35",fallback: 'no_image.jpg', class: "users_show_chat_image_cicle" %>
 					</div>
-					<% end %>
+					<br>
+					<div class="user_show_talk_name" width="150px">
+						<span><%= talk.user.username  %></span>
+					</div>
 				</div>
-				<div class="users_show_chats_send">
-					<%= form_for(@talk,url: user_talks_path(user_id: @user.id)) do |f| %>
-					<%= f.text_area :user_talk, :size => "42x3",placeholder:"100文字以内" %>
-                    <%= button_tag :type => "submit", :class =>"btn btn-info" do %>
-                      コメントする
-                    <% end %>
-					<% end %>
+				<div class="users_show_chats_litle_box">
+					<div class="product_show_comment_date clearfix">
+	                	<span style="float: left"><%= talk.created_at.strftime('%Y/%m/%d') %></span>
+	            	</div>
+
+					<div class="product_show_balloon">
+						<div class="user_show_talk_content"><%= talk.user_talk %>
+						</div>
+						<% if talk.user_id == current_user.id %>
+						<div class="user_show_talk_destroy">
+							<p><%= link_to "", user_talk_path(talk.id), method: :delete, class: "far fa-trash-alt my-gray", "data-confirm" => "本当に削除しますか?"%></p>
+						</div>
+						<% end %>
+					</div>
 				</div>
 			</div>
+			<% end %>
+		</div>
+
+		<div class="users_show_chats_send">
+			<%= form_for(@talk,url: user_talks_path(user_id: @user.id)) do |f| %>
+			<%= f.text_area :user_talk, :size => "42x3",placeholder:"100文字以内" %>
+		    <%= button_tag :type => "submit", :class =>"btn btn-info" do %>
+		      コメントする
+		    <% end %>
+			<% end %>
+		</div>
+	</div>
 </div>
+
 <style>
 .users_show_chats_box{
 	width: 100%;
@@ -68,8 +73,8 @@
 	word-break: break-word;
 }
 .user_show_talk_destroy{
-    margin-left: 219px;
-    margin-top: -15px;
+    margin-left: 186px;
+    margin-top: -22px;
 
 }
 

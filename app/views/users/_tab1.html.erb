@@ -3,9 +3,9 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
-<div class="container">
+<div class="container clearfix">
   <table>
-  <% @user.locations.each do |pt| %>
+  <% @user_locations.each do |pt| %>
 
         <tr>
           <td>
@@ -46,9 +46,6 @@
     		            <% if @user == current_user %>
     		          <li>
     						    <%= link_to "Edit", edit_place_talk_path(pt.id) %>
-    		           |</li>
-    		          <li>
-    						    <%= link_to "Delete", place_talk_path(pt.id), method: :delete,"data-confirm" => "本当に削除しますか?"  %>
     		          </li>
     		            <% end %>
     				    </ul>
@@ -57,6 +54,7 @@
         </tr>
 	<% end %>
   </table>
+  <div class="location_page"><%= paginate(@user_locations) %></div>
 </div>
 <style>
 .container {
@@ -73,5 +71,16 @@
 
 .list-inline >li{
   font-size: 10px;
+}
+.location_page{
+  float: left;
+}
+.location_page > .pagination{
+  margin: 0 auto;
+}
+
+.location_page > .pagination > .current{
+  margin:0 auto;
+  display: inline;
 }
 </style>

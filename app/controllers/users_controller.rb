@@ -3,11 +3,12 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    @user_locations = Location.where(user_id: @user.id).page(params[:page]).per(3)
     @talk = UserTalk.new
     @room = Room.find_by(user_id: params[:id])
     @talk1 = UserTalk.where(room_id: @room.id)
     @favorites = Favorite.where(user_id: @user.id)
-    @talks = UserTalk.where("created_at >= ?", Time.zone.now.beginning_of_day)
+    @talks = UserTalk.where("created_at >= ?", Time.zone.now.beginning_of_day).where(room_id: @room.id)
   end
 
   def edit
