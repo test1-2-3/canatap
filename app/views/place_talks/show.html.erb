@@ -12,21 +12,21 @@
                         <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
-                                   <%= attachment_image_tag @place_talk, :image , :size => "200x200", format: 'jpeg' ,fallback: 'no_image.jpg', class: "img-circle img-responsive user_img" %>
+                                   <%= attachment_image_tag @place_talk, :image , :size => "200x200",fallback: '/images/no_image2.png', class: "img-circle img-responsive place_image" %>
                                 </div>
                                 <!-- ここからいいね機能 -->
                                 <div>
                                 <% if @place_talk.favorited_by?(current_user) %>
                             	</div>
 								<li>
-								<%= link_to place_talk_favorites_path(@place_talk), method: :delete do %>
+								<%= link_to place_talk_favorites_path(@place_talk,location_id: @place_talk.id), method: :delete do %>
 								  <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
 								  <%= @place_talk.favorites.count %> いいね
 								<% end %>
 								</li>
 								<% else %>
 								<li>
-								<%= link_to place_talk_favorites_path(@place_talk), method: :post do %>
+								<%= link_to place_talk_favorites_path(@place_talk,location_id: @place_talk.id), method: :post do %>
 								  <i class="fa fa-heart-o" aria-hidden="true"></i>
 								  <%= @place_talk.favorites.count %> いいね
 								<% end %>
@@ -42,7 +42,7 @@
                                 <div class="centered-text col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
                                     <div itemscope="" itemtype="http://schema.org/Person">
                                         <h2><%= @place_talk.content_id %></h2>
-                                        <p itemprop="jobTitle"><%= @place_talk.place_talk %></p>
+                                        <p itemprop="jobTitle"><%= @place_talk.comment %></p>
                                         <% if @place_talk.user_id == current_user %>
 	                                        <p><span itemprop="affiliation"><%= link_to "編集", edit_place_talk_path(@place_talk.id),class: "fas fa-user-edit" %></span></p>
 	                                        <p>
@@ -59,7 +59,7 @@
                         <div id="social-links" class=" col-lg-12">
                             <div class="row">
                                 <div class="col-xs-6 col-sm-3 col-md-2 col-lg-3 social-btn-holder">
-                                	<!-- ここにタグいれる予定 -->
+                                	<!-- ここにタグ機能実装予定 -->
                                 </div>
                             </div>
                         </div>

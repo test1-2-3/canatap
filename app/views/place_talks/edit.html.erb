@@ -8,7 +8,7 @@
         <div class=" col-lg-offset-3 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-body">
-                	<%= form_for(@place_talk) do |f| %>
+                	<%= form_for(@place_talk, url: {controler: "place_talks", action: "update" }) do |f| %>
 					<div class="users_edit_errors">
 					<% if @place_talk.errors.any? %>
 						<h3><%= @place_talk.errors.count %>件のエラーがあります</h3>
@@ -33,14 +33,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="row">
-                                <div class="centered-text col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+                                <div class="centered-text col-sm-offset-1 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
                                     <div itemscope="" itemtype="http://schema.org/Person">
                                        <p><span itemprop="affiliation">
                                         <h4>Content(作品名)</h4>
-										<!-- ここにContentモデルに保存させるような記述 -->
-										</span></p>
-										<h4>Place(場所名)※任意</h4>
-										<%= f.text_field :place_name,class: "users_edit_account_edit"%>
+										<%= f.text_field :name,class: "users_edit_account_edit"%>
                                     	  　<p><span itemprop="affiliation">
 										<h4>Prefecture(県)</h4>
 										<%= f.text_field :prefecture,class: "users_edit_account_edit"%>県</span></p>
@@ -48,10 +45,10 @@
 										<%= f.text_field :adress,class: "adress"%>
                                         <p><span itemprop="affiliation">
                                         <h4>Comment※任意</h4>
-										<%= f.text_field :place_talk,class: "users_edit_account_edit"%>　
+										<%= f.text_field :comment,:size => "30x8",class: "place_talks_comment_edit"%>
 										</span></p>
                                        	<div>
-										<%= f.submit '投稿する', class: "users_edit_submit" %>　
+										<%= f.submit '投稿する', class: "users_edit_submit" %>
 										</div>
                                     </div>
                                 </div>

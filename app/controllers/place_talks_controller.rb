@@ -22,6 +22,7 @@ class PlaceTalksController < ApplicationController
   def show
     @place_talk = Location.find(params[:id])
     @place_talk_comment = PlaceTalkComment.new
+    @favorites = Favorite.where(user_id: @place_talk.user.id)
   end
 
   def new
@@ -31,7 +32,7 @@ class PlaceTalksController < ApplicationController
   end
 
   def edit
-    @place_talk = PlaceTalk.find(params[:id])
+    @place_talk = Location.find(params[:id])
   end
 
   def detail
@@ -71,15 +72,24 @@ class PlaceTalksController < ApplicationController
   end
 
   def update
-    @place_talk = PlaceTalk.find(params[:id])
-    @place_talk.update(place_talk_params)
-    redirect_to user_path(@place_talk.user_id)
+    @place_talk = Location.find(params[:id])
+    if @place_talk.update(place_talk_params)
+      redirect_to user_path(@place_talk.user_id), notce: "保存しました"
+    else
+      render :edit
+    end
+    # @place_talk = PlaceTalk.find(params[:id])
+    # @place_talk.update(place_talk_params)
+    # redirect_to user_path(@place_talk.user_id)
   end
 
   def destroy
   end
 
   private
+  def place_talk_params
+      params.require(:location).permit(:adress, :longitude, :latitude,:prefecture,:image,:comment,:content_id,:name, contents_attributes:[:id])#:nameはContentに送信に変更予定
+  end
   def location_params
       params.require(:location).permit(:adress, :longitude, :latitude,:prefecture,:image,:comment,:content_id,:name, contents_attributes:[:id])#:nameはContentに送信に変更予定
   end
