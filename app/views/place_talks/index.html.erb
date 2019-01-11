@@ -159,6 +159,35 @@ $(function(){
   })
 });
 
+//検索結果　表示部分 
+$(function($) {
+//メニューをwindowの高さいっぱいにする
+     
+    $(document).ready(function() {
+        if(gon.result != null){
+          console.log(gon.result)
+        $(function(){ //クリックしたら
+          if($('.drawr').is(":animated")){
+          return false;
+          }else{
+          $('.drawr').animate({width:'toggle'}); //animateで表示・非表示
+          $(this).toggleClass('peke'); //toggleでクラス追加・削除
+          return false;
+          }
+        })
+      }
+    });
+   
+  //別領域をクリックでメニューを閉じる
+  $(document).click(function(event) {
+    if (!$(event.target).closest('.drawr').length) {
+      $('.btn').removeClass('peke');
+      $('.drawr').animate({width:'toggle'});
+    }
+  });
+   
+});
+
 </script>
 <!-- ここから追加フォームー -->
 <div id="location" style="display: none">
@@ -207,7 +236,26 @@ $(function(){
 </div>
 <button type="button" class="btn btn-primary modal_button" data-toggle="modal" data-target="#myModal" style="display: none"></button>
 <!-- モーダルウィンドウfin -->
-
+<!-- 検索結果表示 -->
+</div>
+<% if @check.present? %>
+  <div class="result drawr">
+    <div class="result_text">
+      <br>
+      <% @result.each do |result| %>
+      <br>
+      <%= link_to user_path(result.user_id) do  %>
+      <span><%=result.username %>さんが</span><% end %><br>
+      <span><%=result.adress %>に</span><br>
+      <span><%=result.name %>を登録しています。</span><br>
+      <br>
+      <% end %>
+      <div class="location_page"><%= paginate(@result) %></div>
+    </div>
+  </div>
+<% else %>
+<% end %>
+<!-- 検索結果fin -->
 
 <style>
 /*bootstrapのデフォルト設定をオーバーライト*/
