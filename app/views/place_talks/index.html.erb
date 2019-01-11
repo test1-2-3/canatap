@@ -25,40 +25,26 @@ window.onload = function(){
 
     ymap.drawMap(new Y.LatLng(35.658561, 139.701312), 17, Y.LayerSetId.NORMAL);//地図を表示
 
-    // var control = new Y.SearchControl();//検索フォームを追加
-    // ymap.addControl(control)
     ymap.addControl(new Y.SearchControl(), new Y.ControlPosition(Y.ControlPosition.BOTTOM_LEFT));
 
 
     var control = new Y.SliderZoomControlVertical();//ズームスライドバーを追加
     ymap.addControl(control);
 
-    ymap.bind("moveend", function(){onMoved();});//地図移動した時に、移動後の中心地の緯度経度をとってる
+    ymap.bind("moveend", function(){onMoved();});//地図移動した時に、移動後の中心地の緯度経度をとる
     function onMoved(){
         latlng = ymap.getCenter();
-        // document.getElementById("lat").value = latlng.lat();
-        // document.getElementById("lng").value = latlng.lng();
   }
 
   //マーカーをクリックしたら呼び出される
   var markerClicked = function(){
-    // console.log("========")
-      // var ll = this.getLatLng();
-      // alert(ll.toString());
        $.ajax({
-          type:'POST', // リクエストのタイプはGETです
-          url: '/newmap', // URLは/mealsを指定します。つまりmeals#indexのアクションをリクエストします
-          data: {location: this.getLatLng().toString()}, // コントローラへフォームの値を送信します
-          dataType: 'json' // データの型はjsonで指定します
+          type:'POST',
+          url: '/newmap', 
+          data: {location: this.getLatLng().toString()}, 
+          dataType: 'json' 
         }).done(function (data){
-            // lat = data.location.latitude
-            // lon = data.location.longitude
-            // marker = new Y.Marker(new Y.LatLng(lat,lon));
-            // marker.bindInfoWindow('aaaa');
-            // ymap.addFeature(marker);
             comment = data.location.comment
-            // $("#comment").text(comment)
-             // console.log(comment)
         }).fail(function (data) {
            //通信失敗
             alert('通信に失敗しました。');  
@@ -66,8 +52,6 @@ window.onload = function(){
   }
 
   $(document).on("ajax:success", ".submit", function(e) {
-    // $('.comment').html(e.detail[2]["response"]);
-    // console.log(e)
     let response = e.detail[2]["response"]
     // console.log(response)
     let locations = JSON.parse(response).location
@@ -80,15 +64,15 @@ window.onload = function(){
       //markerにクリックイベントをつける（bindする）
       marker.bind('click', markerClicked);
       marker.bindInfoWindow(
-        '<h6>投稿者</h6>' 
+        '<div class="info"><h6>投稿者</h6>' 
         + locations[i].username
         + '<br><h5>作品名</h5>'
         + locations[i].name
         + '<br><h5>コメント</h5><span></span>'
-        + locations[i].comment
+        + locations[i].comment + '</div>'
         );
 
-      //ここから３回めのajaxについて考え中
+      //写真投稿用のajax追加検討中
 
       // var id = locations[i].id
       // Number(id)
@@ -114,7 +98,7 @@ window.onload = function(){
       }));
     }
 
-    //ここから画像の値を引用について考え中
+    //投稿写真引用について検討中
       // $('.photo').children('img').attr('src', img_url+'/image.jpeg');
 
   })
@@ -138,21 +122,24 @@ window.onload = function(){
            geocoder.execute(request , function( ydf ) {
               if ( ydf.features.length > 0 ) {
                 var feature = ydf.features[0];
-                // console.log(feature);
-                // alert(feature.property.Address);
-                // console.log(feature);
 
                   $('#adress').val(feature.property.Address);
                   $('#prefecture').val(feature.property.AddressElement[0].Name);
-                  // console.log(feature.property.AddressElement[0]);
             }
   } );
 };
 }
 //モーダルウィンドウ読み込み 
 $(window).on('load',function(){
-    $('#myModal').modal('show');
+    var myPromise = $.when($('#myModal').modal('show'));
+})
+$(function(){
+    $("#akogare").css({opacity:'0', height:'0'});
+    setTimeout(function(){
+        $("#akogare").stop(true,true).animate({opacity:'1',height:'50'},800);
+    },500);
 });
+
 // 新着プッシュ通知
 Push.Permission.request();
 Push.create('更新履歴', {
@@ -191,7 +178,7 @@ $(function(){
                 <%= f.hidden_field :latitude, :value => "latitude", :id => "latitude" -%>
                 <%= f.hidden_field :prefecture, :value => "prefecture", :id => "prefecture"  -%>
                 <%= f.hidden_field :adress, :value => "adress", :id => "adress"  -%>
-                <!--ここから Contentモデルへネスとしてデータ送信予定  -->
+                <!--ここから Contentモデルへデータ送信予定  -->
                 <!-- # f.fields_for :contents, @location.contents.build do |ff| %>
                   # ff.text_field :name, class: "location_contents"%>
                 # end %> -->
@@ -205,19 +192,18 @@ $(function(){
 </div>
 <!-- ここまで追加フォームー -->
 <!-- モーダルウィンドウstart -->
-<div class="modal fade" id="myModal">
+<div class="modal fade modal-box" id="myModal">
   <div class="modal-dialog">
     <div class="modal-header">
-      <h1>憧れの世界へ出かけよう。</h1>
+      <h1 id="akogare">憧れの世界へ出かけよう。</h1>
     </div>
     <div class="modal-content">
-        <div class="map_button" data-dismiss="modal" aria-hidden="true"><span>
-      <%= link_to "地図を表示", place_talks_path,method: :post, remote: true, class:"submit", id:"modal_submit" %></span></div>
-</div>
-
-<div id="comment">
-      </div>
+        <div class="map_button" data-dismiss="modal" aria-hidden="true">
+          <span>
+          <%= link_to "地図を表示", place_talks_path,method: :post, remote: true, class:"submit", id:"modal_submit" %></span>
+        </div>
     </div>
+  </div>
 </div>
 <button type="button" class="btn btn-primary modal_button" data-toggle="modal" data-target="#myModal" style="display: none"></button>
 <!-- モーダルウィンドウfin -->
@@ -236,53 +222,6 @@ $(function(){
   border:none; 
   box-shadow:none;
 }
-/*壁紙の明度を下げる*/
-.user_body::before{
-  /* 透過した黒を重ねる */
-  background-color: rgba(0,0,0,0.5);
-  height: 692px;
-  width: 1411px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  content: ' ';
-}
-/*吹き出しの位置調整*/
-.row {
-    position: absolute;
-    top: 266px;
-    left: 658px;
-}
-/*作成するボタン*/
-.submit_button {
-  display       : inline-block;
-  border-radius : 5%;          /* 角丸       */
-  font-size     : 9pt;        /* 文字サイズ */
-  text-align    : center;      /* 文字位置   */
-  cursor        : pointer;     /* カーソル   */
-  padding       : 4px 4px;   /* 余白       */
-  background    : #01DFD7;     /* 背景色     */
-  color         : #ffffff;     /* 文字色     */
-  line-height   : 1em;         /* 1行の高さ  */
-  transition    : .3s;         /* なめらか変化 */
-  border        : 2px solid #01DFD7;    /* 枠の指定 */
-}
-.submit_button:hover {
-  color         : #006600;     /* 背景色     */
-  background    : #ffffff;     /* 文字色     */
-}
-.popover-content {
-    padding: 10px 37px;
-    width: 350px;
-    border-radius : 5%;  
-}
 
-input.location_comment{
-  width: 230px;
-  height: 84px;
-  vertical-align: top;
-}
 </style>
 

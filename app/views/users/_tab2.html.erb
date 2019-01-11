@@ -2,7 +2,6 @@
 <div class="container">
   <table>
   <% @favorites.each do |fv| %>
-      <div class="media">
         <tr>
           <td>
             <a class="pull-left" href="#">
@@ -24,9 +23,9 @@
             </div>
           </td>
         </tr>
-      </div>
   <% end %>
   </table>
+  <div class="location_page"><%= paginate(@favorites) %></div>
 </div>
 <style>
 .container {

@@ -8,15 +8,13 @@ class PlaceTalksController < ApplicationController
       @place_talk = Location.where(created_at: from...to)
       @location = Location.new
       @location.contents.build
-      # ここから３回めのajaxでうけとった値をContentsにもっていく予定
+      # ３回めのajaxでうけとった値をContentsにもっていく予定
       # @p = Location.where(id: params[:id])
       # binding.pry
       # if @place = Content.where(location_id: @p.id).exists?
       #   else
       #     @place = aaa　データがなかった場合の仮処理
       # end
-
-
   end
 
   def show

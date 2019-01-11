@@ -2,6 +2,55 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+/*壁紙の明度を下げる*/
+.user_body::before{
+  /* 透過した黒を重ねる */
+  background-color: rgba(0,0,0,0.5);
+  height: 692px;
+  width: 1411px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: ' ';
+}
+/*吹き出しの位置調整*/
+.row {
+    position: absolute;
+    top: 266px;
+    left: 658px;
+}
+/*作成するボタン*/
+.submit_button {
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 9pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 4px 4px;   /* 余白       */
+  background    : #01DFD7;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  border        : 2px solid #01DFD7;    /* 枠の指定 */
+}
+.submit_button:hover {
+  color         : #006600;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
+}
+.popover-content {
+    padding: 10px 37px;
+    width: 350px;
+    border-radius : 5%;  
+}
+
+input.location_comment{
+  width: 230px;
+  height: 84px;
+  vertical-align: top;
+}
+
 .users_edit_account_edit{
 	text-align: center;
 	width: 100px;
@@ -20,13 +69,15 @@
 	margin: 10px auto;
 }
 
+.modal-box{
+	pointer-events: none;
+}
 .modal-dialog{
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 100%;
     margin: auto;
-    pointer-events: none;
 }
 
 .modal-header h1{
@@ -85,19 +136,17 @@
   right: 27px;
 }
 
-//吹き出し用の設定
+/*//吹き出し用の設定*/
 .popover.show{
   margin-bottom: 10px;
 }
-//横の画像用の設定
+/*//横の画像用の設定*/
 img.reviews {
   margin-bottom: 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-
-
-//並んでいるものを上下中央で揃える設定
+/*//並んでいるものを上下中央で揃える設定*/
 .row-center{
   text-align: center;
   letter-spacing: -0.4em;
@@ -108,3 +157,15 @@ img.reviews {
   vertical-align: middle;
   float: none !important;
 }
+
+/*インフォウィンドウ*/
+.info{
+  text-align: left;
+}
+
+.info h6,.info h5{
+  text-align: left;
+  font-weight: bold;
+  text-shadow:2px 2px 3px #ffd5d5;
+}
+
