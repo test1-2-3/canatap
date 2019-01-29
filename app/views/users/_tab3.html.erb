@@ -17,7 +17,8 @@
 	            	</div>
 
 					<div class="product_show_balloon">
-						<div class="user_show_talk_content"><%= talk.user_talk %>
+						<div class="user_show_talk_content">
+							<p class="abc"><%= talk.user_talk %></p>
 						</div>
 						<% if talk.user_id == current_user.id %>
 						<div class="user_show_talk_destroy">
@@ -116,7 +117,6 @@ display: block;
 
 .user_show_talk_content {
 position: relative;
-height: 40px;
 padding: 10px;
 border: 1px solid;
 border-radius: 10px;

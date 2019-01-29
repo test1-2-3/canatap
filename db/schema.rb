@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_03_113263) do
+ActiveRecord::Schema.define(version: 2019_01_07_195053) do
 
   create_table "content_tagmaps", force: :cascade do |t|
     t.integer "tag_id"
@@ -77,6 +77,16 @@ ActiveRecord::Schema.define(version: 2019_01_03_113263) do
     t.text "image_id"
     t.string "content_id"
     t.string "name"
+  end
+
+  create_table "mails", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id"
+    t.string "email"
+    t.string "subject"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "place_talk_comments", force: :cascade do |t|

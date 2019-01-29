@@ -4,8 +4,11 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
     <title>Canatap</title>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= include_gon %>
+    <%= javascript_include_tag "application" %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -16,28 +19,17 @@
     <!-- ヘッダー -->
     <header id="head clearfix">
 
-        <%= link_to place_talks_path do %>
-        <div class="products_index_header_title">
-          <img src='/images/logo.png'class="products_index_header_logo">
-        </div>
-        <% end %>
+
         <div class="products_index_heade_center">
-          <div class="location_new">
+          <div class="location_result">
+            <div class="location_new">
             <% @place_talks.each do |new_p| %>
             <span><%= new_p.created_at.strftime('%Y/%m/%d') %></span>
-            <%= link_to user_path(new_p.user_id),:style =>"text-decoration:none" do |f| %>
-            <span><%=new_p.username %>
-            <% end %>さんが</span>
+            <span><%=new_p.username %>さんが</span>
             <span><%=new_p.adress %>に</span>
             <span><%=new_p.name %>を登録しました。</span><br>
             <% end %>
           </div>
-          <div class="location_result" style="display:none">
-            <% @result.each do |result| %>
-            <span><%=result.username %>さんが</span>
-            <span><%=result.adress %>に</span>
-            <span><%=result.name %>を登録しています。</span><br>
-            <% end %>
           </div>
         </div>
         <div class="products_index_heade_right">
@@ -46,12 +38,11 @@
           <th class="search">
             <dl class="searchbox">
               <%= search_form_for @search, url: place_talks_path do |f| %>
-                <dt><%= f.text_field :adress ,placeholder: '住所を入力....' %></dt>
+                <dt><%= f.text_field :name_or_username_or_adress_or_prefecture_cont ,placeholder: '住所を入力....' %></dt>
                 <dd><%= f.submit ("検索") , class: 'search-btn' %></dd>
               <% end %>
             </dl>
           </th>
-
 
               <!-- ここはログイン時のみ -->
           <tr>
@@ -86,6 +77,11 @@
 
     </header>
     <div class="user_body">
+      <div class="products_index_header_title">
+        <%= link_to place_talks_path do %>
+        <img src='/images/logo4.png'class="products_index_header_logo">
+        <% end %>
+
       <!-- deviseのエラーメッセージの表示領域 -->
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
@@ -110,18 +106,35 @@
   <!-- ここからフッター -->
 
 </html>
-<script>
+<!-- <script>
   $('.search_btn').click(function(){
       $('.location_new').css('display','none');
       $('.location_result').css('display','block');
   });
-</script>
+</script> -->
+
 <style>
+.peke {
+    background-position: -35px 0;
+}
+.drawr {
+    display: none;
+    background-color:rgba(239, 105, 152, 0.51);
+    position: absolute;
+    top: 0px;
+    left:0px;
+    width:202px;
+    height: 736px;
+    padding:120px 5px 20px 10px;
+    box-shadow: 1px 0 5px 2px rgba(0, 0, 0, 0.16);
+    z-index: 9998;
+  }
 /* 検索ボックス */
 .products_index_heade_center{
   width: 830px;
   height: 100px;
   margin: 0;
+  margin-left: 135px;
   padding: 10px 80px 0;
   float: left;
 }

@@ -1,3 +1,53 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.about_box{
+	width: 70%;
+	margin: 0 auto;
+	margin-top: 100px;
+	background-color: white;
+	box-shadow: 0px 0px 4px 2px #B3B3B3;
+}
+
+.about_text{
+	width: 90%;
+	margin: 0 auto;
+	padding: 15px;
+}
+
+.about_title h1{
+  border-bottom: 7px solid #ED346C;
+  text-shadow:2px 2px 3px #ffd5d5;
+  margin-top: 0px;
+}
+
+.about_title h3{
+  text-shadow:2px 2px 3px #ffd5d5;
+}
+
+.about_content h5{
+	border-bottom: 1px solid gray;
+}
+
+.about_logo_back{
+	width: 100px;
+	height: 100px;
+	max-width: 100%;
+	max-height: 100%;
+	margin:15px 350px 10px;
+	transition: .5s ;
+	transform: rotateZ( 0deg );
+}
+
+.about_logo_back:hover {
+	transform: rotateZ( 360deg );
+}
+
+.logo_text{
+	position: absolute;
+	top: 627px;
+	left: 643px;
+	font-size: 12px;
+	text-shadow:2px 2px 3px #ffd5d5;
+}
