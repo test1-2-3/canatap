@@ -1,12 +1,13 @@
 # README
 こちらはポートフォリオ用Webアプリ「Canatap」のページです。
+
 http://ec2-13-113-235-75.ap-northeast-1.compute.amazonaws.com/
 
 <img width="1354" alt="2019-02-22 14 49 55" src="https://user-images.githubusercontent.com/42484577/53222447-28046a00-36b1-11e9-88db-557b44045380.png">
 
 
 # Canatap
-** Canatapはユーザー投稿型の「聖地巡礼MAP」作成サイトです。
+### Canatapはユーザー投稿型の「聖地巡礼MAP」作成サイトです。
 好きだったあの作品の舞台、憧れの俳優さんが訪れた場所など、
 あなたにとっての「聖地」を投稿してください！
 - 同じものが好きな人と出会う、
