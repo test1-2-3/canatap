@@ -1,9 +1,8 @@
 # README
 こちらはポートフォリオ用Webアプリ「Canatap」のページです。
-
 http://ec2-13-113-235-75.ap-northeast-1.compute.amazonaws.com/
 
-<img width="1410" alt="2019-02-13 15 29 21" src="https://user-images.githubusercontent.com/42484577/53221484-e4a7fc80-36ac-11e9-9198-88d59372cde3.png">
+<img width="1354" alt="2019-02-22 14 49 55" src="https://user-images.githubusercontent.com/42484577/53222447-28046a00-36b1-11e9-88db-557b44045380.png">
 
 
 # Canatap
