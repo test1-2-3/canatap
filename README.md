@@ -1,24 +1,46 @@
 # README
+こちらはポートフォリオ用Webアプリ「Canatap」のページです。
+http://ec2-13-113-235-75.ap-northeast-1.compute.amazonaws.com/homes/about
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![Uploading スクリーンショット 2019-02-13 15.29.21.png…]()
 
-Things you may want to cover:
+# Canatap
+**Canatapはユーザー投稿型の「聖地巡礼MAP」作成サイトです。**
+好きだったあの作品の舞台、憧れの俳優さんが訪れた場所など、
+あなたにとっての「聖地」を投稿してください！
+- 同じものが好きな人と出会う、
+- 同じ場所を聖地とする別の作品に出会う、
+- 自分が好きな作品のまだ知らぬ聖地に出会う　etcetc...
+このサイトを通じて、出会いや興味の幅を広げるきっかけを掴んでもらえれば幸いです。
 
-* Ruby version
+# How use MAP?
+### 1.TOP画面MAPから、新たな聖地を探しましょう。###
+MAP左下にある検索バーに住所を指定することで、
+MAPの表示位置を変更することができます。
+### 2.投稿したい場所をクリックして聖地情報を投稿しましょう。###
+自分が知っている聖地情報がまだ登録されていなかった場合、
+その場所をクリックすることで登録ウィンドウが表示されます。
+必要箇所に記入し、送信を押してください。
+### 3.登録済みの聖地を見てみましょう。###
+登録された聖地情報はMAP上にマーカーで表示されます。
+マーカーをクリックすることでウィンドウが開き詳細が表示されます。
 
-* System dependencies
+# Let's find friends
+### マイページを使ってユーザー同志で交流しましょう。###
+検索結果のユーザー名をクリックすることでそのユーザーのマイページへ飛びます。
+マイページには、以下機能がついています。
+- profile
+- 投稿履歴
+- お気に入り
+- チャット
+Profileでは、登録した自分のタグと
+同一タグを登録しているユーザーが表示されるので、
+そこから新たな友達をさがしにいくことも可能です。
 
-* Configuration
+# Point
+Yahoo mapAPI[YOLP]を使用しています。 
 
-* Database creation
 
-* Database initialization
+* Ruby version 5.2
+* Database creation　MySQL
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
