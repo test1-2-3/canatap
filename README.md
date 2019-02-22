@@ -3,10 +3,11 @@
 
 http://ec2-13-113-235-75.ap-northeast-1.compute.amazonaws.com/
 
-![Uploading スクリーンショット 2019-02-13 15.29.21.png…]()
+<img width="1410" alt="2019-02-13 15 29 21" src="https://user-images.githubusercontent.com/42484577/53221484-e4a7fc80-36ac-11e9-9198-88d59372cde3.png">
+
 
 # Canatap
-**Canatapはユーザー投稿型の「聖地巡礼MAP」作成サイトです。
+** Canatapはユーザー投稿型の「聖地巡礼MAP」作成サイトです。
 好きだったあの作品の舞台、憧れの俳優さんが訪れた場所など、
 あなたにとっての「聖地」を投稿してください！
 - 同じものが好きな人と出会う、
