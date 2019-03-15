@@ -1,6 +1,10 @@
 # README
 こちらはポートフォリオ用Webアプリ「Canatap」のページです。
 
+テスト用アカウント
+ユーザー名：太郎
+パスワード：tttttt
+
 http://ec2-13-113-235-75.ap-northeast-1.compute.amazonaws.com/
 
 <img width="1354" alt="2019-02-22 14 49 55" src="https://user-images.githubusercontent.com/42484577/53222447-28046a00-36b1-11e9-88db-557b44045380.png">
